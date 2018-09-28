@@ -1,0 +1,28 @@
+{
+  "environment": "web",
+  "source": "1iHLKtEdduJhalit0dowUYHV0Z4S-9ll9F4ya_5UtUmU",
+  "format": "html",
+  "prefix": "../../",
+  "mainga": "UA-49880327-14",
+  "updated": "2018-09-27T23:36:17Z",
+  "id": "kotlin-workshop",
+  "duration": 495,
+  "title": "Kotlin Workshop",
+  "author": "Ionut, Diana",
+  "summary": "In this codelab, you'll learn how to migrate a Android Java app to Kotlin.",
+  "theme": "mobile",
+  "status": [
+    "draft"
+  ],
+  "category": [
+    "Mobile"
+  ],
+  "tags": [
+    "android",
+    "java",
+    "kotlin",
+    "mobile"
+  ],
+  "feedback": "https://github.com/googlecodelabs/kotlin-workshop/issues",
+  "url": "kotlin-workshop"
+}

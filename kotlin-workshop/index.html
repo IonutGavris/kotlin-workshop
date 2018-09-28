@@ -1,0 +1,1767 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Kotlin Workshop</title>
+  <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../../elements/codelab.html">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <style is="custom-style">
+    body {
+      font-family: "Roboto",sans-serif;
+      background: var(--google-codelab-background, #F8F9FA);
+    }
+  </style>
+  
+</head>
+<body unresolved class="fullbleed">
+
+  <google-codelab title="Kotlin Workshop"
+                  environment="web"
+                  feedback-link="https://github.com/googlecodelabs/kotlin-workshop/issues">
+    
+      <google-codelab-step label="Introduction" duration="20">
+        <h2>The plan for today</h2>
+<ul>
+<li><h3>Migrate a Java project to Kotlin</h3>
+</li>
+<li><h3>Start writing Kotlin code</h3>
+</li>
+<li><h3>Understand and think in Kotlin</h3>
+</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Setting up" duration="10">
+        <h3>General overview of the agenda</h3>
+<p><strong>Getting started</strong></p>
+<ul>
+<li>Kotlin mindset</li>
+<li>Kotlin is nicer than Java in 18 steps</li>
+</ul>
+<p><strong>Architecture</strong></p>
+<p><strong>Kotlin for beginners</strong></p>
+<ul>
+<li>Migrate to Kotlin</li>
+<li>Solving migration issues</li>
+<li>Interoperability</li>
+<li>Solving interoperability issues</li>
+<li>Flow control</li>
+</ul>
+<p><strong>Advanced Kotlin</strong></p>
+<ul>
+<li>Functions</li>
+<li>Data classes</li>
+<li>Coroutines</li>
+</ul>
+<p><strong>More than Kotlin</strong></p>
+<ul>
+<li>Android KTX</li>
+<li>UI Automation</li>
+<li>Kotlin hidden costs</li>
+<li>Kotlin Multiplatform</li>
+</ul>
+<p><strong>Tips &amp; Tricks</strong></p>
+<h3>Prerequisites</h3>
+<p>Android Studio 3.2</p>
+<p><a href="https://developer.android.com/studio/" target="_blank"><code>https://developer.android.com/studio/</code></a></p>
+<p>JDK 8 or just use embedded Android Studio JDK</p>
+<p><a href="https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank"><code>https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html</code></a></p>
+<p>Workshop app source code</p>
+<pre><code>git clone https://github.com/IonutGavris/shoebox-android.git</code></pre>
+<h3>What is ShoeBox?</h3>
+<p><img style="max-width: 624.00px" src="img/80547af5a16033c4.png"></p>
+<p><strong>ShoeBox promo</strong></p>
+<p><a href="https://youtu.be/KwON1VfMHXY" target="_blank">https://youtu.be/KwON1VfMHXY</a></p>
+<p><strong>The ShoeBox story</strong></p>
+<p><a href="https://youtu.be/v6iyN89tK3E" target="_blank">https://youtu.be/v6iyN89tK3E</a></p>
+<p><strong>The Android app</strong></p>
+<h3><img style="max-width: 216.00px" src="img/bf8eb468c178f8c5.png"> <img style="max-width: 216.00px" src="img/2c408d1f27210236.png"> <img style="max-width: 216.00px" src="img/d3eeb29d32e9210d.png"></h3>
+<h3><img style="max-width: 216.00px" src="img/d61afce1f6c0572c.png"> <img style="max-width: 216.00px" src="img/4ed69049f72f2b3d.png"></h3>
+<h3>Successfully compiling and running the app</h3>
+<ul>
+<li>Open ShoeBox Android project in Android Studio</li>
+<li>Build &amp; Run</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Kotlin mindset" duration="20">
+        <h2>History</h2>
+<h3>Started in 2010 by JetBrains</h3>
+<h3>Created a programming language that is:</h3>
+<ul>
+<li><h4>Safe and approachable</h4>
+</li>
+<li><h4>Pragmatic</h4>
+</li>
+<li><h4>Statically typed</h4>
+</li>
+<li><h4>Supports modern multi platform applications</h4>
+</li>
+<li><h4>100% interoperable with Java™ and Android™</h4>
+</li>
+</ul>
+<h2>Mindset</h2>
+<p><em>&#34;Kotlin is a functional programming language that allows writing more elegant, expressive code.&#34;</em></p>
+<p><em>&#34;Kotlin is a game changer for the Android Platform development and it&#39;s Fun!&#34;</em></p>
+<p><em>&#34;Switching to Kotlin was rather difficult, especially for developers without prior functional programming experience.&#34;</em></p>
+<h2>Benefits</h2>
+<h3>Concise</h3>
+<p>Create a POJO with getters, setters, <code>equals()</code>, <code>hashCode()</code>, <code>toString()</code> and <code>copy()</code> in a single line:</p>
+<pre><code>data class Customer(val name: String, val email: String, val company: String)</code></pre>
+<p>Or filter a list using a lambda expression:</p>
+<pre><code>val positiveNumbers = list.filter { it &gt; 0 }</code></pre>
+<p>Want a singleton? Create an object:</p>
+<pre><code>object ThisIsASingleton {
+    val companyName: String = &#34;JetBrains&#34;
+}</code></pre>
+<h3>Safe</h3>
+<p>Get rid of those pesky NullPointerExceptions, you know, The Billion Dollar Mistake</p>
+<pre><code>var output: String
+output = null   // Compilation error</code></pre>
+<p>Kotlin protects you from mistakenly operating on nullable types</p>
+<pre><code>val name: String? = null    // Nullable type
+println(name.length())      // Compilation error</code></pre>
+<p>And if you check a type is right, the compiler will auto-cast it for you</p>
+<pre><code>fun calculateTotal(obj: Any) {
+    if (obj is Invoice)
+        obj.calculateTotal()
+}</code></pre>
+<h3>Interoperable</h3>
+<p>Use any existing library on the JVM, as there&#39;s 100% compatibility, including SAM support.</p>
+<pre><code>import io.reactivex.Flowable
+import io.reactivex.schedulers.Schedulers
+
+Flowable
+    .fromCallable {
+        Thread.sleep(1000) //  imitate expensive computation
+        &#34;Done&#34;
+    }
+    .subscribeOn(Schedulers.io())
+    .observeOn(Schedulers.single())
+    .subscribe(::println, Throwable::printStackTrace)</code></pre>
+<p>Target either the JVM or JavaScript. Write code in Kotlin and decide where you want to deploy to</p>
+<pre><code>import kotlin.browser.window
+
+fun onLoad() {
+    window.document.body!!.innerHTML += &#34;&lt;br/&gt;Hello, Kotlin!&#34;
+}</code></pre>
+<h3>Tool-friendly</h3>
+<p>A language needs tooling and JetBrains provides the best integration for Kotlin in <strong>Android Studio</strong>.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Kotlin is nicer than Java in 18 steps" duration="30">
+        <h3>0# <a href="https://kotlinlang.org/docs/reference/java-interop.html" target="_blank">Java Interoperability</a></h3>
+<p>Kotlin is 100% interoperable with Java. You can literally continue work on your old Java projects using Kotlin. All your favorite Java frameworks are still available, and whatever framework you&#39;ll write in Kotlin is easily adopted by your stubborn Java loving friend.</p>
+<h3>1# <a href="https://kotlinlang.org/docs/reference/basic-syntax.html" target="_blank">Familiar Syntax</a></h3>
+<p>Kotlin isn&#39;t some weird language born in academia. Its syntax is familiar to any programmer coming from the <a href="https://en.wikipedia.org/wiki/Object-oriented_programming" target="_blank">OOP</a> domain, and can be more or less understood from the get go. There are of course some differences from Java such as the reworked constructors or the <code>val</code> <code>var</code> variable declarations. The snippet below presents most of the basics:</p>
+<pre><code>class Foo {
+   val b: String = &#34;b&#34;     // val means unmodifiable
+   var i: Int = 0          // var means modifiable
+   fun hello() {
+       val str = &#34;Hello&#34;
+       print(&#34;$str World&#34;)
+   }
+   fun sum(x: Int, y: Int): Int {
+       return x + y
+   }
+   fun maxOf(a: Float, b: Float) = if (a &gt; b) a else b
+}</code></pre>
+<h3>2# <a href="https://kotlinlang.org/docs/reference/basic-types.html#string-templates" target="_blank">String Interpolation</a></h3>
+<p>It&#39;s as if a smarter and more readable version of Java&#39;s <code>String.format()</code> was built into the language:</p>
+<pre><code>val x = 4
+val y = 7
+print(&#34;sum of $x and $y is ${x + y}&#34;)  // sum of 4 and 7 is 11</code></pre>
+<h3>3# <a href="https://kotlinlang.org/docs/reference/properties.html" target="_blank">Type Inference</a></h3>
+<p>Kotlin will infer your types wherever you feel it will improve readability:</p>
+<pre><code>val a = &#34;abc&#34;                         // type inferred to String
+val b = 4                             // type inferred to Int
+
+val c: Double = 0.7                   // type declared explicitly
+val d: List&lt;String&gt; = ArrayList()     // type declared explicitly</code></pre>
+<h3>4# <a href="https://kotlinlang.org/docs/reference/typecasts.html" target="_blank">Smart Casts</a></h3>
+<p>The Kotlin compiler tracks your logic and auto-casts types if possible, which means no more instanceof checks followed by explicit casts:</p>
+<pre><code>if (obj is String) {
+   print(obj.toUpperCase())     // obj is now known to be a String
+}</code></pre>
+<h3>5# <a href="https://kotlinlang.org/docs/reference/equality.html" target="_blank">Intuitive Equals</a></h3>
+<p>You can stop calling <code>equals()</code> explicitly, because the <code>==</code> operator now checks for structural equality:</p>
+<pre><code>val john1 = Person(&#34;John&#34;)
+val john2 = Person(&#34;John&#34;)
+john1 == john2    // true  (structural equality)
+john1 === john2   // false (referential equality)</code></pre>
+<h3>6# <a href="https://kotlinlang.org/docs/reference/functions.html#default-arguments" target="_blank">Default Arguments</a></h3>
+<p>No need to define several similar methods with varying arguments:</p>
+<pre><code>fun build(title: String, width: Int = 800, height: Int = 600) {
+   Frame(title, width, height)
+}</code></pre>
+<h3>7# <a href="https://kotlinlang.org/docs/reference/functions.html#named-arguments" target="_blank">Named Arguments</a></h3>
+<p>Combined with default arguments, named arguments eliminates the need for <a href="https://en.wikipedia.org/wiki/Builder_pattern" target="_blank">builders</a>:</p>
+<pre><code>build(&#34;PacMan&#34;, 400, 300)                           // equivalent
+build(title = &#34;PacMan&#34;, width = 400, height = 300)  // equivalent
+build(width = 400, height = 300, title = &#34;PacMan&#34;)  // equivalent</code></pre>
+<h3>8# <a href="https://kotlinlang.org/docs/reference/control-flow.html#when-expression" target="_blank">The When Expression</a></h3>
+<p>The switch case is replaced with the much more readable and flexible when expression:</p>
+<pre><code>when (x) {
+   1 -&gt; print(&#34;x is 1&#34;)
+   2 -&gt; print(&#34;x is 2&#34;)
+   3, 4 -&gt; print(&#34;x is 3 or 4&#34;)
+   in 5..10 -&gt; print(&#34;x is 5, 6, 7, 8, 9, or 10&#34;)
+   else -&gt; print(&#34;x is out of range&#34;)
+}</code></pre>
+<p>It works both as an expression or a statement, and with or without an argument:</p>
+<pre><code>val res: Boolean = when {
+   obj == null -&gt; false
+   obj is String -&gt; true
+   else -&gt; throw IllegalStateException()
+}</code></pre>
+<h3>9# <a href="https://kotlinlang.org/docs/reference/properties.html#getters-and-setters" target="_blank">Properties</a></h3>
+<p>Custom set &amp; get behavior can be added to public fields, which means we can stop bloating our code with mindless <a href="http://stackoverflow.com/questions/1568091/why-use-getters-and-setters" target="_blank">getters &amp; setters</a>.</p>
+<pre><code>class Frame {
+   var width: Int = 800
+   var height: Int = 600
+
+   val pixels: Int
+       get() = width * height
+}</code></pre>
+<h3>10# <a href="https://kotlinlang.org/docs/reference/data-classes.html" target="_blank">The Data Class</a></h3>
+<p>It&#39;s a POJO complete with <code>toString()</code>, <code>equals()</code>, <code>hashCode()</code>, and <code>copy()</code>, and unlike in Java it won&#39;t take up 100 lines of code:</p>
+<pre><code>data class Person(val name: String,
+                 var email: String,
+                 var age: Int)
+
+val john = Person(&#34;John&#34;, &#34;john@gmail.com&#34;, 112)</code></pre>
+<h3>11# <a href="https://kotlinlang.org/docs/reference/operator-overloading.html" target="_blank">Operator Overloading</a></h3>
+<p>A predefined set of operators can be overloaded to improve readability:</p>
+<pre><code>data class Vec(val x: Float, val y: Float) {
+   operator fun plus(v: Vec) = Vec(x + v.x, y + v.y)
+}
+
+val v = Vec(2f, 3f) + Vec(4f, 1f)</code></pre>
+<h3>12# <a href="https://kotlinlang.org/docs/reference/multi-declarations.html" target="_blank">Destructuring Declarations</a></h3>
+<p>Some objects can be destructured, which is for example useful for iterating maps:</p>
+<pre><code>for ((key, value) in map) {
+   print(&#34;Key: $key&#34;)
+   print(&#34;Value: $value&#34;)
+}</code></pre>
+<h3>13# <a href="https://kotlinlang.org/docs/reference/ranges.html" target="_blank">Ranges</a></h3>
+<p>For readability&#39;s sake:</p>
+<pre><code>for (i in 1..100) { ... }
+for (i in 0 until 100) { ... }
+for (i in 2..10 step 2) { ... }
+for (i in 10 downTo 1) { ... }
+if (x in 1..10) { ... }</code></pre>
+<h3>14# <a href="https://kotlinlang.org/docs/reference/extensions.html" target="_blank">Extension Functions</a></h3>
+<p>Remember the first time you had to sort a List in Java? You couldn&#39;t find a <code>sort()</code> function so you had to ask either your tutor or google to learn of <code>Collections.sort()</code>. And later when you had to capitalize a String, you ended up writing your own helper function because you didn&#39;t know of <code>StringUtils.capitalize()</code>.</p>
+<p>If only there was a way to add new functions to old classes; that way your IDE could help you find the right function in code-completion. In Kotlin you can do exactly that:</p>
+<pre><code>fun String.replaceSpaces(): String {
+   return this.replace(&#39; &#39;, &#39;_&#39;)
+}
+
+val formatted = str.replaceSpaces()</code></pre>
+<p>The standard library extends the functionality of Java&#39;s original types, which was especially needed for String:</p>
+<pre><code>str.removeSuffix(&#34;.txt&#34;)
+str.capitalize()
+str.substringAfterLast(&#34;/&#34;)
+str.replaceAfter(&#34;:&#34;, &#34;classified&#34;)</code></pre>
+<h3>15# <a href="https://kotlinlang.org/docs/reference/null-safety.html" target="_blank">Null Safety</a></h3>
+<p>Java is what we should call an almost statically typed language. In it, a variable of type String is not guaranteed to refer to a String— it might refer to null. Even though we are used to this, it negates the safety of static type checking, and as a result Java developers have to live in constant fear of <a href="http://stackoverflow.com/questions/218384/what-is-a-nullpointerexception-and-how-do-i-fix-it" target="_blank">NPEs</a>.</p>
+<p>Kotlin resolves this by distinguishing between non-null types and nullable types. Types are non-null by default, and can be made nullable by adding a <code>?</code> like so:</p>
+<pre><code>var a: String = &#34;abc&#34;
+a = null                // compile error
+
+var b: String? = &#34;xyz&#34;
+b = null                // no problem</code></pre>
+<p>Kotlin forces you to guard against NPEs whenever you access a nullable type:</p>
+<pre><code>val x = b.length        // compile error: b might be null</code></pre>
+<p>And while this might seem cumbersome, it&#39;s really a breeze thanks to a few of its features. We still have smart casts, which casts nullable types to non-null wherever possible:</p>
+<pre><code>if (b == null) return
+val x = b.length        // no problem</code></pre>
+<p>We could also use a safe call <code>?.</code>, which evaluates to null instead of throwing a NPE:</p>
+<pre><code>val x = b?.length       // type of x is nullable Int</code></pre>
+<p>Safe calls can be chained together to avoid those nested if-not-null checks we sometimes write in other languages, and if we want a default value other than null we can use the elvis operator <code>?:</code> :</p>
+<pre><code>val name = ship?.captain?.name ?: &#34;unknown&#34;</code></pre>
+<p>If none of that works for you, and you absolutely need a NPE, you will have to ask for it explicitly:</p>
+<pre><code>val x = b?.length ?: throw NullPointerException()  // same as below
+val x = b!!.length                                 // same as above</code></pre>
+<h3>16# <a href="https://kotlinlang.org/docs/reference/lambdas.html" target="_blank">Better Lambdas</a></h3>
+<p>Oh boy, is this a good lambda system — perfectly balanced between readability and terseness, thanks to some clever design choices. The syntax is first of all straight forward:</p>
+<pre><code>val sum = { x: Int, y: Int -&gt; x + y }   // type: (Int, Int) -&gt; Int
+val res = sum(4,7)                      // res == 11</code></pre>
+<p>And here come the clever bits:</p>
+<ol type="1" start="1">
+<li>Method parentheses can be moved or omitted if the lambda is the last or the only argument of a method.</li>
+<li>If we choose not to declare the argument of a single-argument-lambda it&#39;ll be implicitly declared under the name <code>it</code>.</li>
+</ol>
+<p>These facts combined makes the following three lines equivalent:</p>
+<pre><code>numbers.filter({ x -&gt; x.isPrime() })
+numbers.filter { x -&gt; x.isPrime() }
+numbers.filter { it.isPrime() }</code></pre>
+<p>And this allows us to write concise functional code — just look at this beauty:</p>
+<pre><code>persons
+   .filter { it.age &gt;= 18 }
+   .sortedBy { it.name }
+   .map { it.email }
+   .forEach { print(it) }</code></pre>
+<p>Kotlin&#39;s lambda system combined with extension functions makes it ideal for <a href="https://en.wikipedia.org/wiki/Domain-specific_language" target="_blank">DSL</a> creation. Check out <a href="https://github.com/Kotlin/anko" target="_blank">Anko</a> for an example of a DSL that aims to enhance Android development:</p>
+<pre><code>verticalLayout {
+   padding = dip(30)
+   editText {
+       hint = &#34;Name&#34;
+       textSize = 24f
+   }
+   editText {
+       hint = &#34;Password&#34;
+       textSize = 24f
+   }
+   button(&#34;Login&#34;) {
+       textSize = 26f
+   }
+}</code></pre>
+<h3>17# <a href="https://kotlinlang.org/docs/tutorials/getting-started.html" target="_blank">IDE Support</a></h3>
+<p>You have a number of options if you intend to get started with Kotlin, but I highly recommend using IntelliJ which comes bundled with Kotlin—its features demonstrate the advantage of having the same people design both language and IDE.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Architecture" duration="30">
+        <h3>General presentation architecture we chose</h3>
+<p>MVVM + Dagger + RxJava/RxKotlin</p>
+<h3>MVVM</h3>
+<h4>The Model-View-ViewModel Pattern</h4>
+<p>The main players in the MVVM pattern are:</p>
+<ul>
+<li>The View — that informs the ViewModel about the user&#39;s actions</li>
+<li>The ViewModel — exposes streams of data relevant to the View</li>
+<li>The DataModel — abstracts the data source. The ViewModel works with the DataModel to get and save the data.</li>
+</ul>
+<p>At a first glance, MVVM seems very similar to the <a href="https://upday.github.io/blog/model-view-presenter/" target="_blank">Model-View-Presenter pattern</a>, because both of them do a great job in abstracting the view&#39;s state and behavior. The Presentation Model abstracts a View independent from a specific user-interface platform, whereas the MVVM pattern was created to simplify the <strong>event driven</strong> programming of user interfaces.</p>
+<p>If the MVP pattern meant that the Presenter was telling the View directly what to display, in MVVM, <strong>ViewModel exposes streams of events</strong> to which the Views can bind to. Like this, the ViewModel does not need to hold a reference to the View anymore, like the Presenter is. This also means that all the interfaces that the MVP pattern requires, are now dropped.</p>
+<p>The Views also notify the ViewModel about different actions. Thus, the MVVM pattern supports two-way data binding between the View and ViewModel and there is a many-to-one relationship between View and ViewModel. View has a reference to ViewModel but <strong>ViewModel has no information about the View</strong>. The consumer of the data should know about the producer, but the producer — the ViewModel — doesn&#39;t know, and doesn&#39;t care, who consumes the data.</p>
+<p><img style="max-width: 624.00px" src="img/c1f5c210fce542a8.png"></p>
+<p>Model-View-ViewModel class structure</p>
+<h3>Dagger 2</h3>
+<p>A fast dependency injector for Android and Java.</p>
+<p>Dagger 2 is a compile-time evolution approach to dependency injection. Taking the approach started in Dagger 1.x to its ultimate conclusion, Dagger 2.x eliminates all reflection, and improves code clarity by removing the traditional ObjectGraph/Injector in favor of user-specified @Component interfaces.</p>
+<h3>Kotlin is like Swift</h3>
+<p><img style="max-width: 624.00px" src="img/284a0ac786a313ab.png"></p>
+<p><a href="http://nilhcem.com/swift-is-like-kotlin/" target="_blank">http://nilhcem.com/swift-is-like-kotlin/</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Migrate to Kotlin" duration="30">
+        <h3>Installing the Kotlin plugin</h3>
+<p>The Kotlin plugin is bundled with Android Studio starting from <a href="https://developer.android.com/studio/preview/index.html" target="_blank">version 3.0</a>. If you use an earlier version, you&#39;ll need to install the Kotlin plugin. <code>Go to File | Settings | Plugins | Install JetBrains plugin...</code> and then search for and install Kotlin. If you are looking at the &#34;Welcome to Android Studio&#34; screen, choose <code>Configure | Plugins | Install JetBrains plugin...</code> You&#39;ll need to restart the IDE after this completes.</p>
+<h3>Converting Java code to Kotlin</h3>
+<p>Open <code>AgeSelectedEvent.java</code> file. Then invoke action <strong>Convert Java File to Kotlin File</strong>. You can do it by several ways. The easiest one is to invoke <a href="https://www.jetbrains.com/idea/help/navigating-to-action.html" target="_blank">Find Action</a> and start typing an action name (like in a screencast below). Alternatively you can call this option via the <code>Code | Convert Java File to Kotlin File</code> menu entry or by using the corresponding shortcut (you can find it at the menu entry).</p>
+<p><img style="max-width: 382.50px" src="img/b35b61ba4bfa2d0b.png"></p>
+<p>After the conversion you should have a class written in Kotlin.</p>
+<pre><code>class AgeSelectedEvent(var ageInterval: AgeInterval)</code></pre>
+<h3>Configuring Kotlin in the project</h3>
+<p>If you start editing this file, Android Studio shows you a prompt that Kotlin is not configured, so you can configure it. Alternatively, you can invoke the configuration by selecting <code>Tools | Kotlin | Configure Kotlin in Project</code> from the main menu.</p>
+<p><img style="max-width: 624.00px" src="img/6ccb9f9862d4e7dc.png"></p>
+<p>You are then prompted for the version of Kotlin. Choose the latest available from the list of installed versions.</p>
+<h3><img style="max-width: 374.50px" src="img/c5b511b8a021203c.png"></h3>
+<p>After you configure Kotlin, build.gradle file for the application should be updated. Now you can see that <code>apply plugin: &#39;kotlin-android&#39;</code> and the kotlin-stdlib dependency were added.</p>
+<p>(For more details how to set up gradle for your project, please check <a href="https://kotlinlang.org/docs/reference/using-gradle.html#targeting-android" target="_blank">Using Gradle</a>)</p>
+<pre><code>apply plugin: &#39;com.android.application&#39;
+apply plugin: &#39;kotlin-android&#39;</code></pre>
+<p>The last thing to do is to sync the project. You can press &#39;Sync Now&#39; in a prompt or invoke an action <strong>Sync Project with Gradle Files</strong>.</p>
+<pre><code>buildscript {
+   ext.kotlin_version = &#39;1.2.71&#39;
+   ext.compile_version = 28
+
+   repositories {
+       google()
+       jcenter()
+   }
+
+   dependencies {
+      classpath &#34;org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version&#34;
+   }
+}</code></pre>
+<h3>Building and publishing the Kotlin application for Android<br></h3>
+<p>You are now ready to build the application and run it on an emulator or device. This works in exactly the same way as in Java. You can make a release of the application and sign it similarly to what you do for an Android application written in Java.<br><br>Kotlin has a rather small runtime file size: the library is approximately 964KB (as of 1.2.70). This means Kotlin adds just a little to .apk file size.<br><br>Kotlin compiler produces byte-code, thus there really is no difference in terms of look and feel of Kotlin applications versus those written in Java.</p>
+<h3>Exercise: Migrate to Kotlin all the classes from the <code>event</code> package </h3>
+<h3>Look over the Kotlin class (it&#39;s new structure)</h3>
+<h3>Java issues addressed in Kotlin</h3>
+<p>Kotlin fixes a series of issues that Java suffers from:</p>
+<ul>
+<li>Null references are <a href="https://kotlinlang.org/docs/reference/null-safety.html" target="_blank">controlled by the type system</a>.</li>
+<li><a href="https://kotlinlang.org/docs/reference/java-interop.html" target="_blank">No raw types</a></li>
+<li>Arrays in Kotlin are <a href="https://kotlinlang.org/docs/reference/basic-types.html#arrays" target="_blank">invariant</a></li>
+<li>Kotlin has proper <a href="https://kotlinlang.org/docs/reference/lambdas.html#function-types" target="_blank">function types</a>, as opposed to Java&#39;s SAM-conversions</li>
+<li><a href="https://kotlinlang.org/docs/reference/generics.html#use-site-variance-type-projections" target="_blank">Use-site variance</a> without wildcards</li>
+<li>Kotlin does not have checked <a href="https://kotlinlang.org/docs/reference/exceptions.html" target="_blank">exceptions</a></li>
+</ul>
+<p>What Java has that Kotlin does not</p>
+<ul>
+<li><a href="https://kotlinlang.org/docs/reference/exceptions.html" target="_blank">Checked exceptions</a></li>
+<li><a href="https://kotlinlang.org/docs/reference/basic-types.html" target="_blank">Primitive types</a> that are not classes</li>
+<li><a href="https://kotlinlang.org/docs/reference/classes.html" target="_blank">Static members</a></li>
+<li><a href="https://kotlinlang.org/docs/reference/properties.html" target="_blank">Non-private fields</a></li>
+<li><a href="https://kotlinlang.org/docs/reference/generics.html" target="_blank">Wildcard-types</a></li>
+<li><a href="https://kotlinlang.org/docs/reference/control-flow.html#if-expression" target="_blank">Ternary-operator <code>a ? b : c</code></a></li>
+</ul>
+<p>What Kotlin has that Java does not</p>
+<ul>
+<li><a href="https://kotlinlang.org/docs/reference/lambdas.html" target="_blank">Lambda expressions</a> + <a href="https://kotlinlang.org/docs/reference/inline-functions.html" target="_blank">Inline functions</a> = performant custom control structures</li>
+<li><a href="https://kotlinlang.org/docs/reference/extensions.html" target="_blank">Extension functions</a></li>
+<li><a href="https://kotlinlang.org/docs/reference/null-safety.html" target="_blank">Null-safety</a></li>
+<li><a href="https://kotlinlang.org/docs/reference/typecasts.html" target="_blank">Smart casts</a></li>
+<li><a href="https://kotlinlang.org/docs/reference/basic-types.html#strings" target="_blank">String templates</a></li>
+<li><a href="https://kotlinlang.org/docs/reference/properties.html" target="_blank">Properties</a></li>
+<li><a href="https://kotlinlang.org/docs/reference/classes.html" target="_blank">Primary constructors</a></li>
+<li><a href="https://kotlinlang.org/docs/reference/delegation.html" target="_blank">First-class delegation</a></li>
+<li><a href="https://kotlinlang.org/docs/reference/basic-types.html" target="_blank">Type inference for variable and property types</a></li>
+<li><a href="https://kotlinlang.org/docs/reference/object-declarations.html" target="_blank">Singletons</a></li>
+<li><a href="https://kotlinlang.org/docs/reference/generics.html" target="_blank">Declaration-site variance &amp; Type projections</a></li>
+<li><a href="https://kotlinlang.org/docs/reference/ranges.html" target="_blank">Range expressions</a></li>
+<li><a href="https://kotlinlang.org/docs/reference/operator-overloading.html" target="_blank">Operator overloading</a></li>
+<li><a href="https://kotlinlang.org/docs/reference/classes.html#companion-objects" target="_blank">Companion objects</a></li>
+<li><a href="https://kotlinlang.org/docs/reference/data-classes.html" target="_blank">Data classes</a></li>
+<li><a href="https://kotlinlang.org/docs/reference/collections.html" target="_blank">Separate interfaces for read-only and mutable collections</a></li>
+<li><a href="https://kotlinlang.org/docs/reference/coroutines.html" target="_blank">Coroutines</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Solving migration issues" duration="15">
+        <h3>Exercise: Migrate <code>MainActivity.java</code> class to Kotlin 💥</h3>
+<h3>Android Frameworks Using Annotation Processing</h3>
+<p>The Android world has many popular frameworks simplifying development. You can use the same frameworks if you develop in Kotlin, often as easily as you&#39;d do that in Java. This tutorial provides examples and highlights the differences in settings.</p>
+<p>We&#39;ll look at <a href="https://kotlinlang.org/docs/tutorials/android-frameworks.html#dagger" target="_blank">Dagger</a>, <a href="https://kotlinlang.org/docs/tutorials/android-frameworks.html#butterknife" target="_blank">Butterknife</a> and <a href="https://kotlinlang.org/docs/tutorials/android-frameworks.html#data-binding" target="_blank">Data Binding</a> (other frameworks can be set up similarly). All these frameworks work through annotation processing: you annotate the code to have the boiler-plate code generated for you. Annotations allow to hide all the verbosity and keep your code simple, and if you need to understand what actually happens at runtime, you can look at the generated code. Note that all these frameworks generate source code in Java, not Kotlin.</p>
+<p>In Kotlin you specify the dependencies in a similar to Java way using <a href="https://kotlinlang.org/docs/reference/kapt.html" target="_blank">Kotlin Annotation processing tool</a> (kapt) instead of annotationProcessor.</p>
+<p><strong>ButterKnife</strong></p>
+<p><a href="http://jakewharton.github.io/butterknife/" target="_blank">ButterKnife</a> allows to bind views to fields directly instead of calling <code>findViewById</code>.</p>
+<p>Note that <a href="https://kotlinlang.org/docs/tutorials/android-plugin.html" target="_blank">Kotlin Android Extensions</a> plugin (automatically bundled into the Kotlin plugin in Android Studio) solves the same issue: replacing <code>findViewById</code> with a concise and straightforward code. Consider using it unless you&#39;re already using ButterKnife and don&#39;t want to migrate.</p>
+<p>You use ButterKnife with Kotlin in the same way as you use it with Java. Let&#39;s see first the changes in the Gradle build script, and then highlight some of the differences in the code.</p>
+<p>In the Gradle dependencies you use add the kotlin-kapt plugin and replace <code>annotationProcessor</code> with <code>kapt</code>:</p>
+<pre><code>apply plugin: &#39;kotlin-kapt&#39;
+
+dependencies {
+    ...
+    compile &#34;com.jakewharton:butterknife:$butterknife-version&#34;
+    kapt &#34;com.jakewharton:butterknife-compiler:$butterknife-version&#34;
+}</code></pre>
+<p>We&#39;ve converted the ButterKnife <a href="https://github.com/JakeWharton/butterknife/tree/master/sample/app/src/main/java/com/example" target="_blank">sample</a> to Kotlin. The resulting code can be found <a href="https://github.com/JetBrains/kotlin-examples/tree/master/gradle/android-butterknife" target="_blank">here</a>.</p>
+<p>Let&#39;s look over it to spot what has changed. In Java you annotated the field, binding it with the corresponding view:</p>
+<pre><code>@BindView(R2.id.title) TextView title;</code></pre>
+<p>In Kotlin you can&#39;t work with fields directly, you work with <a href="https://kotlinlang.org/docs/reference/properties.html" target="_blank">properties</a>. You annotate the property:</p>
+<pre><code>@BindView(R2.id.title)
+lateinit var title: TextView</code></pre>
+<p>The @BindView annotation is defined to be applied to the fields only, but the Kotlin compiler understands that and annotates the corresponding field under the hood when you apply the annotation to the whole property.</p>
+<p>Note how <a href="https://kotlinlang.org/docs/reference/properties.html#late-initialized-properties-and-variables" target="_blank">the lateinit modifier</a> allows to declare a non-null type initialized after the object is created (after the constructor call). Without lateinit you&#39;d have to declare a <a href="https://kotlinlang.org/docs/reference/null-safety.html" target="_blank">nullable type</a> and add additional nullability checks.</p>
+<p>You can also configure methods as listeners, using ButterKnife annotations:</p>
+<pre><code>@OnClick(R2.id.hello)
+internal fun sayHello() {
+    Toast.makeText(this, &#34;Hello, views!&#34;, LENGTH_SHORT).show()
+}</code></pre>
+<p>This code specifies an action to be performed on the &#34;hello&#34; button click. Note that with lambdas this code looks rather concise written directly in Kotlin:</p>
+<pre><code>hello.setOnClickListener {
+    toast(&#34;Hello, views!&#34;)
+}</code></pre>
+<p>The toast function is defined in the <a href="https://github.com/Kotlin/anko" target="_blank">Anko</a> library.</p>
+<p><strong>Dagger</strong></p>
+<p><a href="https://google.github.io/dagger//" target="_blank">Dagger</a> is a dependency injection framework. If you&#39;re not familiar with it yet, you can read its <a href="https://google.github.io/dagger//users-guide.html" target="_blank">user&#39;s guide</a>. We&#39;ve converted <a href="https://github.com/google/dagger/tree/master/examples/simple" target="_blank">the coffee example</a> described in this guide into Kotlin, and you can find the result <a href="https://github.com/JetBrains/kotlin-examples/tree/master/gradle/kotlin-dagger" target="_blank">here</a>. The Kotlin code looks pretty much the same; you can browse the whole example in one <a href="https://github.com/JetBrains/kotlin-examples/tree/master/gradle/kotlin-dagger/src/main/kotlin/Coffee.kt" target="_blank">file</a>.</p>
+<p>As in Java, you use <code>@Inject</code> to annotate the constructor used by Dagger to create instances of a class. Kotlin has a short syntax for declaring a property and a constructor parameter at the same time. To annotate the constructor, use the constructor keyword explicitly and put the <code>@Inject</code> annotation before it:</p>
+<pre><code>class Thermosiphon 
+@Inject constructor(
+        private val heater: Heater
+) : Pump {
+    // ...
+}</code></pre>
+<p>Annotating methods looks absolutely the same. In the example below <code>@Binds</code> determines that a Thermosiphon object is used whenever a Pump is required, <code>@Provides</code> specifies the way to build a Heater, and <code>@Singleton</code> says that the same Heater should be used all over the place:</p>
+<pre><code>@Module
+abstract class PumpModule {
+    @Binds
+    abstract fun providePump(pump: Thermosiphon): Pump
+}
+
+@Module(includes = arrayOf(PumpModule::class))
+class DripCoffeeModule {
+    @Provides @Singleton
+    fun provideHeater(): Heater = ElectricHeater()
+}</code></pre>
+<p><code>@Module</code>-annotated classes define how to provide different objects. Note that when you pass an annotation argument as a vararg argument, you have to explicitly wrap it into <code>arrayOf</code>, like in <code>@Module(includes = arrayOf(PumpModule::class))</code> above.</p>
+<p>To have a dependency-injected implementation generated for the type, annotate it with <code>@Component</code>. The generated class will have the name of this type prepended with Dagger, like DaggerCoffeeShop below:</p>
+<pre><code>@Singleton
+@Component(modules = arrayOf(DripCoffeeModule::class))
+interface CoffeeShop {
+    fun maker(): CoffeeMaker
+}
+
+fun main(args: Array&lt;String&gt;) {
+    val coffee = DaggerCoffeeShop.builder().build()
+    coffee.maker().brew()
+}</code></pre>
+<p>Dagger generates an implementation of <code>CoffeeShop</code> that allows you to get a fully-injected <code>CoffeeMaker</code>. You can navigate and see the implementation of <code>DaggerCoffeeShop</code> if you open the project in IDE.</p>
+<p>We observed that annotating your code almost hasn&#39;t changed when you switched to Kotlin. Now let&#39;s see what changes should be made to the build script.</p>
+<p>In Java you specify Dagger as <code>annotationProcessor</code> (or apt) dependency:</p>
+<pre><code>dependencies {
+  ...
+  annotationProcessor &#34;com.google.dagger:dagger-compiler:$dagger-version&#34;
+}</code></pre>
+<p>In Kotlin you have to add the <code>kotlin-kapt</code> plugin to enable kapt, and then replace <code>annotationProcessor</code> with <code>kapt</code>:</p>
+<pre><code>apply plugin: &#39;kotlin-kapt&#39;
+dependencies {
+    ...
+    kapt &#34;com.google.dagger:dagger-compiler:$dagger-version&#34;
+}</code></pre>
+<p>That&#39;s all! Note that kapt takes care of your Java files as well, so you don&#39;t need to keep the annotationProcessor dependency.</p>
+<p><strong>Data Binding</strong></p>
+<p>The <a href="https://developer.android.com/topic/libraries/data-binding/index.html" target="_blank">Data Binding Library</a> allows you to bind your application data to the layouts in a concise way.</p>
+<p>You enable the library using the same configuration as in Java:</p>
+<pre><code>android {
+    ...
+    dataBinding {
+        enabled = true
+    }
+}</code></pre>
+<p>To make it work with Kotlin classes add the kapt dependency:</p>
+<pre><code>apply plugin: &#39;kotlin-kapt&#39;
+dependencies {
+    kapt &#34;com.android.databinding:compiler:$android_plugin_version&#34;
+}</code></pre>
+<p>When you switch to Kotlin, your xml layout files don&#39;t change at all. For instance, you use variable within data to describe a variable that may be used within the layout. You can declare a variable of a Kotlin type:</p>
+<pre><code>&lt;data&gt;
+    &lt;variable name=&#34;data&#34; type=&#34;org.example.kotlin.databinding.WeatherData&#34;/&gt;
+&lt;/data&gt;</code></pre>
+<p>You use the <code>@{}</code> syntax for writing expressions, which can now refer Kotlin <a href="https://kotlinlang.org/docs/reference/properties.html" target="_blank">properties</a>:</p>
+<pre><code>&lt;ImageView
+    android:layout_width=&#34;wrap_content&#34;
+    android:layout_height=&#34;wrap_content&#34;
+    android:src=&#34;@{data.imageUrl}&#34;
+    android:contentDescription=&#34;@string/image&#34; /&gt;</code></pre>
+<p>Note that the databinding expression language uses the same syntax for referring to properties as Kotlin: <code>data.imageUrl</code>. In Kotlin you can write v.prop instead of <code>v.getProp()</code> even if <code>getProp()</code> is a Java method. Similarly, instead of calling a setter directly, you may use an assignment:</p>
+<pre><code>class MainActivity : AppCompatActivity() {
+    // ...
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val binding: ActivityMainBinding =
+                DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        binding.data = weather
+        // the same as
+        // binding.setData(weather)
+    }
+}</code></pre>
+<p>You can bind a listener to run an action when a specific event happens:</p>
+<pre><code>&lt;Button
+    android:text=&#34;@string/next&#34;
+    android:layout_width=&#34;match_parent&#34;
+    android:layout_height=&#34;wrap_content&#34;
+    android:onClick=&#34;startOtherActivity&#34; /&gt;</code></pre>
+<p>Here <code>startOtherActivity</code> is a method defined in our <code>MainActivity</code>:</p>
+<pre><code>class MainActivity : AppCompatActivity() {
+    // ...
+    fun startOtherActivity(view: View) = startActivity&lt;OtherActivity&gt;()
+}</code></pre>
+<p>This example uses the utility function startActivity creating an intent with no data and starting a new activity, which comes from the <a href="https://github.com/Kotlin/anko" target="_blank">Anko</a> library. To pass some data, you can say <code>startActivity&lt;OtherActivity&gt;(&#34;KEY&#34; to &#34;VALUE&#34;)</code>.</p>
+<p>Note that instead of declaring lambdas in xml like in the following example, you can can bind actions directly in the code:</p>
+<pre><code>&lt;Button 
+    android:layout_width=&#34;wrap_content&#34; 
+    android:layout_height=&#34;wrap_content&#34;
+    android:onClick=&#34;@{() -&gt; presenter.onSaveClick(task)}&#34; /&gt;</code></pre>
+<pre><code>// the same logic written in Kotlin code
+button.setOnClickListener { presenter.onSaveClick(task) }</code></pre>
+<p>In the last line button is referenced by id using the <a href="https://kotlinlang.org/docs/tutorials/android-plugin.html" target="_blank">Kotlin Android Extensions</a> plugin. Consider using this plugin as an alternative which allows you to keep binding logic in code and have the concise syntax at the same time.</p>
+<h3>Exercise: Add support for KAPT</h3>
+<h3>What is Koin?</h3>
+<p><img style="max-width: 313.50px" src="img/b7a6131ade24fd78.png"></p>
+<p>A pragmatic lightweight dependency injection framework for Kotlin developers. Written in pure Kotlin using functional resolution only: no proxy, no code generation, no reflection!</p>
+<p><strong>Declare a module</strong></p>
+<p>Write with the Koin DSL what you need to assemble:</p>
+<pre><code>// Given some classes 
+class Controller(val service : BusinessService) 
+class BusinessService() 
+
+// just declare it 
+val myModule = module { 
+  single { Controller(get()) } 
+  single { BusinessService() } 
+}</code></pre>
+<p><strong>Start Koin</strong></p>
+<p>Use the <code>startKoin()</code> function to start Koin in your application:</p>
+<pre><code>fun main(vararg args : String) { 
+  // start Koin!
+  startKoin(listOf(myModule))
+}</code></pre>
+<p><strong>Inject in Android</strong></p>
+<p>Easy to inject into your Android classes:</p>
+<pre><code>// Just inject in a simple Activity 
+class MyActivity() : AppCompatActivity() {
+
+    // lazy inject BusinessService into property
+    val service : BusinessService by inject()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        
+        // or directly get any instance
+        val service : BusinessService = get()
+    }
+}</code></pre>
+<p><a href="https://speakerdeck.com/dpreussler/to-inject-or-not-inject-dependency-injection-in-a-kotlin-world-appbuilders-dot-ch-2018" target="_blank">https://speakerdeck.com/dpreussler/to-inject-or-not-inject-dependency-injection-in-a-kotlin-world-appbuilders-dot-ch-2018</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Interoperability" duration="10">
+        <h3>Calling Java code from Kotlin</h3>
+<p>Kotlin is designed with Java Interoperability in mind. Existing Java code can be called from Kotlin in a natural way, and Kotlin code can be used from Java rather smoothly as well. In this section we describe some details about calling Java code from Kotlin.</p>
+<p>Pretty much all Java code can be used without any issues:</p>
+<pre><code>import java.util.*
+
+fun demo(source: List&lt;Int&gt;) {
+    val list = ArrayList&lt;Int&gt;()
+    // &#39;for&#39;-loops work for Java collections:
+    for (item in source) {
+        list.add(item)
+    }
+    // Operator conventions work as well:
+    for (i in 0..source.size - 1) {
+        list[i] = source[i] // get and set are called
+    }
+}</code></pre>
+<h3>Mapped types</h3>
+<p>Kotlin treats some Java types specially. Such types are not loaded from Java &#34;as is&#34;, but are mapped to corresponding Kotlin types. The mapping only matters at compile time, the runtime representation remains unchanged. Java&#39;s primitive types are mapped to corresponding Kotlin types (keeping <a href="https://kotlinlang.org/docs/reference/java-interop.html#null-safety-and-platform-types" target="_blank">platform types</a> in mind):</p>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong><code>Java type</code></strong></p>
+</td><td colspan="1" rowspan="1"><p><strong><code>Kotlin type</code></strong></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>byte</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.Byte</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>short</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.Short</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>int</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.Int</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>long</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.Long</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>char</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.Char</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>float</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.Float</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>double</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.Double</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>boolean</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.Boolean</code></p>
+</td></tr>
+</table>
+<p>Some non-primitive built-in classes are also mapped:</p>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong><code>Java type</code></strong></p>
+</td><td colspan="1" rowspan="1"><p><strong><code>Kotlin type</code></strong></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>java.lang.Object</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.Any!</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>java.lang.Cloneable</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.Cloneable!</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>java.lang.Comparable</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.Comparable!</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>java.lang.Enum</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.Enum!</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>java.lang.Annotation</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.Annotation!</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>java.lang.Deprecated</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.Deprecated!</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>java.lang.CharSequence</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.CharSequence!</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>java.lang.String</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.String!</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>java.lang.Number</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.Number!</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>java.lang.Throwable</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.Throwable!</code></p>
+</td></tr>
+</table>
+<p>Java&#39;s boxed primitive types are mapped to nullable Kotlin types:</p>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong><code>Java type</code></strong></p>
+</td><td colspan="1" rowspan="1"><p><strong><code>Kotlin type</code></strong></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>java.lang.Byte</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.Byte?</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>java.lang.Short</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.Short?</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>java.lang.Integer</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.Int?</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>java.lang.Long</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.Long?</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>java.lang.Character</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.Char?</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>java.lang.Float</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.Float?</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>java.lang.Double</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.Double?</code></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>java.lang.Boolean</code></p>
+</td><td colspan="1" rowspan="1"><p><code>kotlin.Boolean?</code></p>
+</td></tr>
+</table>
+<h3>Getters and Setters</h3>
+<p>Methods that follow the Java conventions for getters and setters (no-argument methods with names starting with get and single-argument methods with names starting with set) are represented as properties in Kotlin. Boolean accessor methods (where the name of the getter starts with is and the name of the setter starts with set) are represented as properties which have the same name as the getter method.</p>
+<p>For example:</p>
+<pre><code>import java.util.Calendar
+
+fun calendarDemo() {
+    val calendar = Calendar.getInstance()
+    if (calendar.firstDayOfWeek == Calendar.SUNDAY) {  // call getFirstDayOfWeek()
+        calendar.firstDayOfWeek = Calendar.MONDAY      // call setFirstDayOfWeek()
+    }
+    if (!calendar.isLenient) {                         // call isLenient()
+        calendar.isLenient = true                      // call setLenient()
+    }
+}</code></pre>
+<p>Note that, if the Java class only has a setter, it will not be visible as a property in Kotlin, because Kotlin does not support set-only properties at this time.</p>
+<h3>Methods returning void</h3>
+<p>If a Java method returns void, it will return Unit when called from Kotlin. If, by any chance, someone uses that return value, it will be assigned at the call site by the Kotlin compiler, since the value itself is known in advance (being Unit).</p>
+<h3>Escaping for Java identifiers that are keywords in Kotlin</h3>
+<p>Some of the Kotlin keywords are valid identifiers in Java: in, object, is, etc. If a Java library uses a Kotlin keyword for a method, you can still call the method escaping it with the backtick <code>(`)</code> character:</p>
+<pre><code>foo.`is`(bar)</code></pre>
+<h3>Null-Safety and Platform Types</h3>
+<p>Any reference in Java may be null, which makes Kotlin&#39;s requirements of strict null-safety impractical for objects coming from Java. Types of Java declarations are treated specially in Kotlin and called platform types. Null-checks are relaxed for such types, so that safety guarantees for them are the same as in Java (see more <a href="https://kotlinlang.org/docs/reference/java-interop.html#mapped-types" target="_blank">below</a>).</p>
+<p>Consider the following examples:</p>
+<pre><code>val list = ArrayList&lt;String&gt;() // non-null (constructor result)
+list.add(&#34;Item&#34;)
+val size = list.size // non-null (primitive int)
+val item = list[0] // platform type inferred (ordinary Java object)</code></pre>
+<p>When we call methods on variables of platform types, Kotlin does not issue nullability errors at compile time, but the call may fail at runtime, because of a null-pointer exception or an assertion that Kotlin generates to prevent nulls from propagating:</p>
+<pre><code>item.substring(1) // allowed, may throw an exception if item == null</code></pre>
+<p>Platform types are non-denotable, meaning that one can not write them down explicitly in the language. When a platform value is assigned to a Kotlin variable, we can rely on type inference (the variable will have an inferred platform type then, as item has in the example above), or we can choose the type that we expect (both nullable and non-null types are allowed):</p>
+<pre><code>val nullable: String? = item // allowed, always works
+val notNull: String = item // allowed, may fail at runtime</code></pre>
+<p>If we choose a non-null type, the compiler will emit an assertion upon assignment. This prevents Kotlin&#39;s non-null variables from holding nulls. Assertions are also emitted when we pass platform values to Kotlin functions expecting non-null values etc. Overall, the compiler does its best to prevent nulls from propagating far through the program (although sometimes this is impossible to eliminate entirely, because of generics).</p>
+<h3>Notation for Platform Types</h3>
+<p>As mentioned above, platform types cannot be mentioned explicitly in the program, so there&#39;s no syntax for them in the language. Nevertheless, the compiler and IDE need to display them sometimes (in error messages, parameter info etc), so we have a mnemonic notation for them:</p>
+<ul>
+<li><code>T!</code> means &#34;T or T?&#34;,</li>
+<li><code>(Mutable)Collection&lt;T&gt;!</code> means &#34;Java collection of T may be mutable or not, may be nullable or not&#34;,</li>
+<li><code>Array&lt;(out) T&gt;!</code> means &#34;Java array of T (or a subtype of T), nullable or not&#34;</li>
+</ul>
+<h3>Nullability annotations</h3>
+<p>Java types which have nullability annotations are represented not as platform types, but as actual nullable or non-null Kotlin types. The compiler supports several flavors of nullability annotations, including:</p>
+<ul>
+<li><a href="https://www.jetbrains.com/idea/help/nullable-and-notnull-annotations.html" target="_blank">JetBrains</a> (<code>@Nullable</code> and <code>@NotNull</code> from the <code>org.jetbrains.annotations</code> package)</li>
+<li>Android (<code>com.android.annotations</code> and <code>android.support.annotations</code>)</li>
+<li>JSR-305 (<code>javax.annotation</code>, more details below)</li>
+<li>FindBugs (<code>edu.umd.cs.findbugs.annotations</code>)</li>
+<li>Eclipse (<code>org.eclipse.jdt.annotation</code>)</li>
+<li>Lombok (<code>lombok.NonNull</code>).</li>
+</ul>
+<h3>Annotating type parameters</h3>
+<p>It is possible to annotate type arguments of generic types to provide nullability information for them as well. For example, consider these annotations on a Java declaration:</p>
+<pre><code>@NotNull
+Set&lt;@NotNull String&gt; toSet(@NotNull Collection&lt;@NotNull String&gt; elements) { ... }</code></pre>
+<p>It leads to the following signature seen in Kotlin:</p>
+<pre><code>fun toSet(elements: (Mutable)Collection&lt;String&gt;) : (Mutable)Set&lt;String&gt; { ... }</code></pre>
+<p>Note the <code>@NotNull</code> annotations on <code>String</code> type arguments. Without them, we get platform types in the type arguments:</p>
+<pre><code>fun toSet(elements: (Mutable)Collection&lt;String!&gt;) : (Mutable)Set&lt;String!&gt; { ... }</code></pre>
+<p>Annotating type arguments works with Java 8 target or higher and requires the nullability annotations to support the <code>TYPE_USE</code> target (<code>org.jetbrains.annotations</code> supports this in version 15 and above).</p>
+<h3>Exercise: Convert <code>Suggestion.java</code> to Kotlin and try to improve the converted code.</h3>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Solving interoperability issues" duration="30">
+        <h3>Debugging Kotlin (java bytecode)</h3>
+<p>It&#39;s important to understand how Kotlin code works and how it influence performance. Fortunately, IntelliJ and Android Studio allow to instantly see bytecode and Java equivalent.</p>
+<p>Display bytecode: <code>Tools -&gt; Kotlin -&gt; Show Kotlin Bytecode</code></p>
+<p>Or just: <code>cmd + shift + A (Mac)</code> / <code>ctrl + shift + A</code> (Windows) and type &#34;Kotlin Bytecode&#34;</p>
+<p><img style="max-width: 624.00px" src="img/b949c2afb654a027.png"></p>
+<p>Search for action &#34;Kotlin Bytecode&#34;</p>
+<p><img style="max-width: 624.00px" src="img/ddf317ff2e674139.png"></p>
+<p>Bytecode for data class</p>
+<p><strong>Display java equivalent</strong>: just click &#34;Decompile&#34; button on the top of &#34;Kotlin Bytecode&#34; window.</p>
+<p><img style="max-width: 624.00px" src="img/2fb536d763fb224.png"></p>
+<p>Java equivalent for Kotlin code</p>
+<h3>Exercise: Use Android Studio decompile feature to see how Kotlin code is converted back to Java</h3>
+<h3>Issues when migrating larger projects</h3>
+<ul>
+<li>&#34;The GSON/MOSHI issue&#34; - with Kotlin classes</li>
+<li>All fields are private by default</li>
+<li>Using lateinit</li>
+<li>Companion objects</li>
+<li>IDE and compilation issues</li>
+</ul>
+<h3>Exercise: Convert <code>LocationContact.java</code> to Kotlin and try to improve the converted code.</h3>
+<h3>Errors in Kotlin vs Errors in Java (optional)</h3>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Flow control" duration="30">
+        <h3>If expression</h3>
+<p>Unlike Java (and other many programming languages), <code>if</code> is an expression in Kotlin because it returns a value. </p>
+<p><code>if</code> branches can be blocks, and the last expression is the value of a block:</p>
+<pre><code>val number = -7
+val result = if (number &gt; 0) {
+        println(&#34;It&#39;s positive :)&#34;)
+        &#34;Positive number&#34;
+} else {
+        println(&#34;It&#39;s negative :(&#34;)
+        &#34;Negative number&#34;
+}
+println(result) //Negative number</code></pre>
+<p>If you&#39;re using <code>if</code> as an expression rather than a statement (for example, returning its value or assigning it to a variable), the expression is required to have an <code>else</code> branch.</p>
+<pre><code>val result = if (number &gt; 0) {
+        &#34;Positive number&#34;
+} else {
+        &#34;Negative number&#34;
+}
+println(result) //Negative number</code></pre>
+<p>💚The curly braces are optional if the body of if has only one statement. This is similar to ternary operator (<code>condition ? then : else</code>) in Java. Hence, there is no ternary operator in Kotlin.</p>
+<pre><code>val result = if (number &gt; 0) &#34;Positive number&#34; else &#34;Negative number&#34;</code></pre>
+<h3>When expression</h3>
+<p>The <code>when</code> construct in Kotlin can be thought of as a replacement for Java <code>switch</code> statement. It evaluates a section of code among many alternatives. <code>when</code> matches its argument against all branches sequentially until some branch condition is satisfied.</p>
+<pre><code>when (x) {
+   1 -&gt; print(&#34;x is 1&#34;)
+   2 -&gt; print(&#34;x is 2&#34;)
+   3, 4 -&gt; print(&#34;x is 3 or 4&#34;)
+   in 5..10 -&gt; print(&#34;x is 5, 6, 7, 8, 9, or 10&#34;)
+   else -&gt; print(&#34;x is out of range&#34;)
+}</code></pre>
+<p>It can be used either as an expression or as a statement. If it is used as an expression, the value of the satisfied branch becomes the value of the overall expression. If it is used as a statement, the values of individual branches are ignored (just like with <code>if</code>, each branch can be a block, and its value is the value of the last expression in the block).</p>
+<p>To check whether a value is of a particular type in runtime, we can use <code>is</code> and <code>!is</code> operator and no cast is needed when using the value.</p>
+<pre><code>when (x) {
+    is Int -&gt; print(x + 1)
+    is String -&gt; print(x.length + 1)
+    is IntArray -&gt; print(x.sum())
+}</code></pre>
+<p>The <code>else</code> branch is evaluated if none of the other branch conditions are satisfied. If <code>when</code> is used as an expression, the <code>else</code> branch is mandatory, unless the compiler can prove that all possible cases are covered with branch conditions (as, for example, with <code>enum</code> class entries and <code>sealed</code> class subtypes).</p>
+<pre><code>sealed class Element
+class Container(vararg val children: Element): Element()
+class Text(val text: String): Element()
+
+when(element) {
+    is Text -&gt; {...}
+    is Container -&gt; {...}
+    // no else branch needed
+}</code></pre>
+<h3>While and do...while loops        </h3>
+<p>If you are familiar with <code>while</code> and <code>do...while</code> loops in Java, you are already familiar with these loops in Kotlin as well :)</p>
+<pre><code>var i = 0
+while (i &lt; 7) {
+    println(i)
+    i++
+}</code></pre>
+<p>If the body of loop has only one statement, it&#39;s not necessary to use curly braces <code>{ }</code>.</p>
+<pre><code>while (i &lt; 7) println(i++)</code></pre>
+<p>The <code>do...while</code> loop is similar to <code>while</code> loop with one key difference: the body is executed once before the condition is checked.</p>
+<pre><code>do println(i++) while (i &lt; 7)</code></pre>
+<h3>For loop</h3>
+<p>There is no traditional <code>for</code> loop in Kotlin unlike Java and other languages. In Kotlin, the <code>for</code> loop is used to iterate through ranges, arrays, maps, strings and so on (anything that provides an <code>Iterator</code>). It&#39;s the equivalent of <code>foreach</code> loop.</p>
+<pre><code>for (item in collection) { println(item) }
+
+val text = &#34;Kotlin&#34;
+for (letter in text) { print(&#34;$letter-&#34;) } // K-o-t-l-i-n-</code></pre>
+<p>If you want to iterate through an array or a list with an index, you can use the <code>withIndex</code> library function.</p>
+<pre><code>for ((index, value) in array.withIndex()) {
+    println(&#34;the element at $index is $value&#34;)
+}</code></pre>
+<p>We can also iterate through a range. Also, if the body of the loop contains only one statement it&#39;s not necessary to use curly braces <code>{ }</code>.</p>
+<pre><code>for (i in 1..7) print(i) //1234567
+for (i in 7..1) print(i) //7654321
+for (i in 7 downTo 1) print(i) //7654321
+for (i in 1..7 step 2) print(i) //1357
+for (i in 7 downTo 1 step 2) print(i) //7531</code></pre>
+<h3>Break expression</h3>
+<p>Suppose you are working with loops. It is sometimes desirable to terminate the loop immediately without checking the condition. In such case, <code>break</code> is used, which terminates the nearest enclosing loop when encountered. It&#39;s similar to how <code>break</code> statement works in Java.</p>
+<pre><code>for (letter in text) {
+    if (letter == &#34;t&#34;) break
+    print(&#34;$letter-&#34;)
+} //K-o-</code></pre>
+<p>For exiting an outer loop we can use the labeled form by marking the outer loop with <code>@&lt;labelName&gt;</code> and using <code>break &lt;labelName&gt;</code>.</p>
+<h3>Continue expression</h3>
+<p>Suppose you are working with loops. It is sometimes desirable to skip the current iteration of the loop. In such case, <code>continue</code> is use, which skips the current iteration of the enclosing loop, and the control of the program jumps to the end of the loop body. We can use labeled form also for <code>continue</code>.</p>
+<pre><code>for (i in 1..7) {
+    println(&#34;$i Always printed.&#34;)
+    if (i &gt; 1 &amp;&amp; i &lt; 7) {
+        continue
+    }
+    println(&#34;$i Not always printed.&#34;) //printed only for 1 and 7
+}</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Functions" duration="30">
+        <p>Functions are used to break a large program into smaller and modular chunks, making our program more organised and manageable. </p>
+<p>Functions in Kotlin, the equivalent of Java methods, are declared using the <code>fun</code> keyword and <strong>always have a return value</strong>. Even if we skip the return type, it will still return <code>Unit</code> (an object which is similar to <code>void</code> in Java)</p>
+<pre><code>fun add(x: Int, y: Int): Int {
+    return x + y
+}</code></pre>
+<p>If the result can be calculated using a single expression, you can get rid of brackets and use the equal sign:</p>
+<pre><code>fun add(x: Int, y: Int) : Int = x + y</code></pre>
+<p>About Kotlin functions:</p>
+<ul>
+<li>easy to try existing functions or start writing and testing new ones: <a href="https://try.kotlinlang.org" target="_blank">https://try.kotlinlang.org</a> </li>
+<li>flexible: parameters, type, scoping, modifiers</li>
+<li>convenient</li>
+<li>enables writing more meaningful code with less boilerplate</li>
+<li>there are two types: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/index.html" target="_blank">Kotlin Standard Library Functions</a> (e.g. <code>arrayOf()</code>, <code>listOf()</code>, <code>orEmpty()</code>, <code>forEach()</code>, <code>groupBy()</code>) &amp; User-defined functions</li>
+</ul>
+<h3>Default values</h3>
+<p><code>param name + &#34;:&#34; + param type {+ &#34;=&#34; + [default value]}</code></p>
+<p>Function parameter can have a <strong>default value</strong> and when the argument is omitted, this value is used. In this way, we can <strong>overload </strong>functions without having to explicitly write all variants and it&#39;s easier to self-document the function with what defaults should be used.</p>
+<p>When overriding such a method, the default parameter values must be omitted from the signature.</p>
+<p>Java doesn&#39;t have default params so one must specify all of them when calling the Kotlin function from Java code.</p>
+<p><strong>💚 OR </strong>we can use <code>@JvmOverloads</code> annotation to generate all the variants in order to be able to call the function from Java without specifying all params!</p>
+<pre><code>@JvmOverloads
+fun toast(message: String, tag: String = &#34;DefaultTag&#34;, length: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(this, &#34;[$tag] $message&#34;, length).show()
+}
+
+toast(&#34;Kotlin&#34;)</code></pre>
+<p>If a default parameter precedes a parameter with no default value, the default value can be used only by calling the function with <strong>named arguments</strong>.</p>
+<h3>Named args</h3>
+<ul>
+<li>improve readability of method invocations</li>
+<li>change order of passed params OR refactor arguments number or order without generating errors</li>
+</ul>
+<p>💥 <strong>Note</strong>: you can&#39;t mix named and positioned arguments so you need to specify all names if you change the positions</p>
+<ul>
+<li>not supported from Java, because Java bytecode does not always preserve names of function parameters</li>
+</ul>
+<pre><code>toast(message=&#34;Kotlin&#34;, length=Toast.LENGTH_LONG)
+toast(message=&#34;Kotlin&#34;, tag=&#34;MyTag&#34;)</code></pre>
+<h3>Variable args</h3>
+<ul>
+<li>There can only be one <code>vararg</code> parameter for a function</li>
+<li>use <code>vararg</code> keyword as the last argument usually OR use named syntax for other variant</li>
+<li>use &#34;spread&#34; operator <code>*</code> to pass an existing array of values</li>
+<li>the passed array can be combined with other passed varags as well; <strong>order does matter</strong></li>
+</ul>
+<pre><code>fun sumOfNumbers(vararg numbers: Int, initialSum: Int): Int { ... }
+
+sumOfNumbers(1, 4, initialSum=10)
+sumOfNumbers(3, 4, 7, 15, initialSum=0)
+val a = intArrayOf(1, 2, 5)
+sumOfNumbers(*a, initialSum=3)</code></pre>
+<h3>Infix notation</h3>
+<ul>
+<li>use <code>infix</code> keyword before declaring a member or extension function which has a single parameter without a default value</li>
+<li>you can omit the dot &amp; parentheses when calling the infix function; e.g. <code>&#34;key&#34; </code><strong><code>to</code></strong><code> &#34;value&#34;</code></li>
+<li>provides a clean, human-readable syntax</li>
+</ul>
+<pre><code>infix fun &lt;A, B&gt; A.to(that: B): Pair&lt;A, B&gt;</code></pre>
+<h3>Generic functions</h3>
+<ul>
+<li>functions can have generic parameters which are specified using angle brackets <code>&lt;&gt;</code> before the function name</li>
+<li>many stdlib functions are built with generics (check them out for examples)</li>
+</ul>
+<pre><code>fun &lt;T&gt; methodName(item: T): List&lt;T&gt; { ... }</code></pre>
+<h3>Higher-order functions</h3>
+<ul>
+<li>these are functions that can take or return other functions (lambda or function reference); e.g. <code>apply()</code>, <code>run()</code> from stdlib</li>
+<li>support for functional programming</li>
+<li>if the last parameter of a function is a function, you can omit the parentheses</li>
+</ul>
+<p>   💥<strong> Note</strong>: extra class is created when using lambda + if lambda captures variables, extra object is created on each call ⇨ pay attention if using this on large collections!</p>
+<h3>Inline functions</h3>
+<ul>
+<li>use <code>inline</code> keyword before function declaration</li>
+<li>help solve higher-order functions performance ⇨ no more object creation</li>
+<li>body of the inlined function is substituted for invocations of the function</li>
+</ul>
+<h3>Extension functions</h3>
+<ul>
+<li>extend functionality of an existing class</li>
+<li>defined outside the class but used as if they were a member of that class</li>
+<li>you could maybe remove helper classes</li>
+<li>generated as static methods that accept the receiver object as its first argument</li>
+</ul>
+<pre><code>fun Activity.toast(message: String, length: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(this, message, length).show()
+}
+// inside an activity class
+toast(&#34;Kotlin&#34;)</code></pre>
+<h3>Companion object</h3>
+<p>There are no static functions in Kotlin so if you want to access private members of an object or create a factory method, you need to define a member function on a companion object</p>
+<p>💥 <strong>Note</strong>: from Java you need to explicitly reference the <code>Companion</code> before calling the factory method. You can rename the companion object to something relevant, like &#34;Factory&#34;:</p>
+<pre><code>companion object Factory { ... }
+
+ClassName.Factory.methodName()</code></pre>
+<p><strong>OR </strong>you can use the <code>@JvmStatic</code> annotation on the declared companion function and avoid referencing <code>Companion</code> in Java.</p>
+<h2>Scope</h2>
+<h3>Top-level functions</h3>
+<ul>
+<li>these are defined within a Kotlin file and belong to their declared file&#39;s package but can be imported and used in other packages</li>
+<li>can be used instead of &#34;Utils&#34; or &#34;Helper&#34; classes containing only static methods (stateless classes)</li>
+<li>the compiler generates a public static void function in a Java class which can be accessed using </li>
+</ul>
+<p><code>[Kotlin file&#39;s name] + &#34;Kt&#34; + &#34;.&#34; + [method name]</code></p>
+<p>    💚 If you want to change the name of the file to be used from Java you can use <code>@file:JvmName(&lt;name&gt;)</code> annotation before declaring the package of the Kotlin file</p>
+<h3>Member functions</h3>
+<ul>
+<li>associated with a class or object and have access to their private members</li>
+<li>default args can&#39;t be changed in overridden methods, instead you must omit the default values</li>
+</ul>
+<h3>Local/Nested functions</h3>
+<ul>
+<li>these are scoped to another function</li>
+<li>useful if your function is only ever called from another function</li>
+<li>have access to all variables and params of the enclosing function ⇒ cleaner code + avoid duplication &amp; deep chains of function calls</li>
+</ul>
+<p>💥 <strong>Note</strong>: can&#39;t test this function in isolation and maybe the logic will be needed outside the parent function. Also, make sure enclosing function is still readable!</p>
+<h3>Benefits:</h3>
+<ul>
+<li>fewer helper classes</li>
+<li>less boilerplate</li>
+<li>cleanup Apis; e.g. Android KTX, Anko</li>
+<li>cleaner syntax: more fluent, avoids extra classes, simplifies test mocking</li>
+<li>useful collection functions</li>
+<li>flexibility gives convenience ⇨ reimagine how code is written</li>
+</ul>
+<h3>Exercise: Create extension functions for the following methods from UiUtils.java: <code>getDeviceData()</code>, <code>getAppVersionName()</code>, <code>useRomanianLanguage()</code>and use these where necessary.</h3>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Data classes" duration="20">
+        <p>Data classes in Kotlin are the equivalent of <strong>POJO</strong>s (Plain Old Java Objects) and their main purpose is to hold data.</p>
+<p>POJOs generally contain the same concepts every time: </p>
+<ul>
+<li>A constructor</li>
+<li>Fields to store data</li>
+<li>Getter and setter functions</li>
+<li><code>hashCode()</code>, <code>equals()</code> and <code>toString()</code> functions</li>
+</ul>
+<p>All these methods usually take up about 50-60 lines of code for only 3 fields. The pain of creating a data class in Java can be alleviated by plugins or the IDE, but most bugs are introduced on further modifications of those classes. It&#39;s very easy to forget to modify all the companion methods accordingly, every time a field is removed or added.</p>
+<p>Fortunately for us, the Kotlin version of these classes, which are marked with the <code>data</code> keyword, are created to encapsulate all of the above functionality in a succinct manner.</p>
+<p>Some of the data classes can be written even in a <strong>single line of code</strong>!</p>
+<pre><code>data class LocationContact(val locationId: Long, val name: String, val phoneNumber: String)</code></pre>
+<p>Under the hood, the compiler will automatically generate, for this class, the field accessors (setters only for mutable fields which are marked with <code>var</code>), <code>hashCode()</code>, <code>equals()</code>, <code>toString()</code>, as well as the useful <code>copy()</code> and <code>componentN()</code> functions.</p>
+<pre><code>val contact = LocationContact(1, &#34;Diana&#34;, &#34;+40740.000.000&#34;)
+println(contact.name) //Diana
+println(contact.toString()) //LocationContact(locationId=1, name=Diana, phoneNumber=+40740.000.000)</code></pre>
+<p>If any of these functions are manually defined by us in the class or have <code>final</code> implementations in a superclass, they will not be generated anymore.</p>
+<p><strong>Requirements</strong> for writing a Kotlin data class:</p>
+<ul>
+<li>The primary constructor must have at least one parameter</li>
+<li>The parameters of the primary constructor must be marked as either <code>val</code> (read-only) or <code>var</code> (read-write)</li>
+<li>The class cannot be open, abstract, inner or sealed</li>
+<li>The class may extend other classes or implement interfaces</li>
+<li>Providing explicit implementations for the <code>componentN()</code> and <code>copy()</code> functions is not allowed</li>
+</ul>
+<h3>Multiple constructors</h3>
+<p>In Kotlin we can define <strong>default values</strong> for arguments in such a way that in case we don&#39;t pass a value for that argument, the default value is assigned to it.</p>
+<pre><code>data class LocationContact(val locationId: Long, val name: String, val phoneNumber: String=&#34;TBA&#34;)</code></pre>
+<p><code>LocationContact(1, &#34;Diana&#34;, &#34;+40740.000.000&#34;)</code> is still valid but now a second constructor <code>LocationContact(1, &#34;Diana&#34;)</code> is allowed. In this case, the <code>phoneNumber</code> value will be <em><code>TBA</code></em>.</p>
+<p>Optional parameters need to be the last parameters in the constructor and if we have multiple optional parameters, they have to be skipped from right to left. But, these limitations can be avoided by using <strong>named arguments</strong>.</p>
+<pre><code>data class LocationContact(val locationId: Long, val name: String=&#34;Anonymous&#34;, val phoneNumber: String)
+val anonymousContact = LocationContact(1, phoneNumber = &#34;+40740.000.000&#34;)
+println(anonymousContact.name) //Anonymous</code></pre>
+<p>💚 Don&#39;t forget to use <code>@JvmOverloads</code> on the Kotlin data class when calling such a constructor from a Java file.</p>
+<pre><code>data class LocationContact @JvmOverloads constructor(val locationId: Long, val name: String=&#34;Anonymous&#34;, val phoneNumber: String)</code></pre>
+<p>Default arguments and named arguments are a very handy way of offering multiple constructors and overloads from a very compact declaration.</p>
+<h3>Properties</h3>
+<p>A much more powerful equivalent of Java fields. These can be declared in the primary constructor or if we want to omit them from the automatically generated functions, we can declare them inside the class body, like:</p>
+<pre><code>data class LocationContact(val locationId: Long, val name: String, val phoneNumber: String) {
+        var details: String = &#34;&#34;
+}
+val contact = LocationContact(1, &#34;Diana&#34;, &#34;+40740.000.000&#34;)
+contact.details = &#34;CALL me only during working hours.&#34;
+println(&#34;$contact&#34;) //LocationContact(locationId=1, name=Diana, phoneNumber=+40740.000.000)</code></pre>
+<p>If nothing is specified, the property uses the default getter and setter. It can, of course, be modified to run whatever custom behaviour you need, without having to change the existing code.</p>
+<pre><code>data class LocationContact(val locationId: Long, val name: String, val phoneNumber: String) {
+        var details: String = &#34;&#34;
+                get() = field.toLowerCase()
+                set(value) {
+                        field = &#34;Details: $value&#34;
+                }
+}
+println(&#34;${contact.details}&#34;) //details: call me only during working hours.</code></pre>
+<p>If the property needs access to its value in a custom getter or setter (as in this case), it requires the creation of a backing field. It can be accessed by using <code>field</code>, a reserved word, and it is automatically created when the compiler finds that it is required. Take into account that if we used the property directly, we would be using the setter and getter, and not doing a direct assignment. You can only use the backing field inside the accessors of the property.</p>
+<h3>Copying a data class</h3>
+<p>If we want to change the state of an <code>LocationContact</code> object, which is an <strong>immutable</strong> class, a new instance of the class is required, with one or more of its properties modified. The <code>copy()</code> method that is generated in Kotlin makes this process easy and intuitive because it can receive as many parameters as values you need to change. So, we can modify the <code>phoneNumber</code>, without changing the state of the original object, by using <strong>named arguments</strong> like in the following syntax:</p>
+<pre><code>val contactChanged = contact.copy(phoneNumber = &#34;+40744.777.444&#34;)
+println(contactChanged) //LocationContact(locationId=1, name=Diana, phoneNumber=+40744.777.444)</code></pre>
+<h3>Mapping an object into variables</h3>
+<p>When we need to map each property inside an object into a variable, we can make use of the automatically created <code>componentN()</code> functions, a process known as <strong>declaration destructuring</strong>. An example using the contact declared above would be:</p>
+<pre><code>val (locationId, name, phoneNumber) = contactChanged
+println(phoneNumber) //+40744.777.444</code></pre>
+<p>This destructuring is also very useful when iterating over a <code>Map</code> (has some extension functions implemented) in a loop and accessing the key and value pair:</p>
+<pre><code>val map = mapOf(&#34;RO&#34; to &#34;Romania&#34;, &#34;IT&#34; to &#34;Italy&#34;) 
+for ((key, value) in map) {
+        println(&#34;key:$key, value:$value&#34;) //[first line printed]key:RO, value:Romania
+}</code></pre>
+<h3>Major benefits:</h3>
+<ul>
+<li>less boilerplate</li>
+<li>less error-prone and easy to maintain code</li>
+</ul>
+<h3>Exercise: Transform AgeInterval.java POJO class to a Kotlin data class </h3>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Coroutines" duration="60">
+        <h3>Kotlin coroutines</h3>
+<p>Android&#39;s threading model is just like any other UI framework where a single thread (usually called the &#34;UI thread&#34;) is responsible for rendering user interface, capturing events and various other aspects. Performing long running operations such as network requests, DB queries, heavy computation will freeze the UI which throws an &#34;Application not responding&#34; (ANR) error.</p>
+<p><img style="max-width: 262.00px" src="img/b3b3398572539c67.png"></p>
+<p>Now, to tackle this problem Android already has quite a few abstractions</p>
+<ol type="1" start="1">
+<li>AsyncTask (Run short operations in sequence, also can be done concurrently)</li>
+<li>Executors (Running tasks concurrently with fixed thread pool)</li>
+<li>Intent service (Run long operations in sequence, handled by a queue)</li>
+<li>Raw threads (For the brave)</li>
+<li>RxJava (Most popular, not from Android framework)</li>
+</ol>
+<p>The above solutions are good, but have several nuances to getting them right. Also, not to mention debugging and cancelling them.</p>
+<h3>Enter Kotlin Coroutines</h3>
+<p>Kotlin coroutines is a way of doing things asynchronously in a sequential manner. Creating coroutines is cheap vs creating threads. Reason being</p>
+<p><em>&#34;Coroutines are completely implemented through a compilation technique (no support from the VM or OS side is required), and suspension works through code transformation&#34;</em></p>
+<p>They are still in experimental stages, which means the API will evolve overtime. But, JetBrains has promised to provide backward compatibility for the same.</p>
+<h3>Code</h3>
+<p>To use coroutines, a function has to be marked as suspended. This can be any normal function which is marked as suspended.</p>
+<p>Now, to use these functions we need coroutine builder&#39;s which are launchand async.</p>
+<h3>Launch &amp; Async</h3>
+<p><strong><code>Launch</code></strong><code> </code> -  Launches a new coroutine without blocking current thread and returns a reference to the coroutine as a <strong><code>Job</code></strong> which can then be used to <strong><code>cancel</code></strong> the coroutine.</p>
+<p><strong><code>Async</code></strong><code> </code> -  Launches a new coroutines and returns its future result as an implementation of <strong><code>Deferred</code></strong></p>
+<pre><code>public actual fun launch(
+   context: CoroutineContext = DefaultDispatcher,
+   start: CoroutineStart = CoroutineStart.DEFAULT,
+   parent: Job? = null,
+   block: suspend CoroutineScope.() -&gt; Unit
+): Job {
+   val newContext = newCoroutineContext(context, parent)
+   val coroutine = if (start.isLazy)
+       LazyStandaloneCoroutine(newContext, block) else
+       StandaloneCoroutine(newContext, active = true)
+   coroutine.start(start, coroutine, block)
+   return coroutine
+}
+public actual fun &lt;T&gt; async(
+   context: CoroutineContext = DefaultDispatcher,
+   start: CoroutineStart = CoroutineStart.DEFAULT,
+   parent: Job? = null,
+   block: suspend CoroutineScope.() -&gt; T
+): Deferred&lt;T&gt; {
+   val newContext = newCoroutineContext(context, parent)
+   val coroutine = if (start.isLazy)
+       LazyDeferredCoroutine(newContext, block) else
+       DeferredCoroutine&lt;T&gt;(newContext, active = true)
+   coroutine.start(start, coroutine, block)
+   return coroutine
+}</code></pre>
+<p><strong><code>CoroutineContext</code></strong><code> </code> - Defines on which thread this coroutine builder runs</p>
+<p><strong><code>DefaultDispatcher</code></strong><code> </code> -  Uses the CommonPool. The developer has full control to specify on which thread it has to run. Other options are UI which runs on the UI thread</p>
+<p><strong><code>CoroutineStart</code></strong><code> </code> -  Defines how it should be started</p>
+<p><code>DEFAULT</code> — Immediately start the execution</p>
+<p><code>LAZY</code> — Start coroutine lazily</p>
+<p>Other options are <code>ATOMIC</code>, <code>UNDISPATCHED</code></p>
+<h3>Exercise: Understand how asynchronous programming can be expressed synchronously using coroutines (Optional)</h3>
+<p><a href="https://github.com/Kotlin/kotlinx.coroutines/blob/master/ui/coroutines-guide-ui.md" target="_blank">https://github.com/Kotlin/kotlinx.coroutines/blob/master/ui/coroutines-guide-ui.md</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Android KTX" duration="20">
+        <p>Android KTX is a set of Kotlin extensions that is part of the Android <a href="https://developer.android.com/jetpack" target="_blank">Jetpack</a> family. It optimizes Jetpack and Android platform APIs for Kotlin use. The purpose of Android KTX is to make Android development with Kotlin more concise, pleasant, and idiomatic by leveraging Kotlin language features such as extension functions/properties, lambdas, named parameters, and parameter default values. Android KTX does not add any new features to the existing Android APIs.</p>
+<p><img style="max-width: 525.50px" src="img/c4851745c8b0305.png"></p>
+<p><a href="https://youtu.be/r_19VZ0xRO8" target="_blank">https://youtu.be/r_19VZ0xRO8</a></p>
+<h2>Getting started</h2>
+<p>To start using Android KTX, add the following to your project&#39;s <code>build.gradle</code> file:</p>
+<pre><code>repositories {
+    google()
+}</code></pre>
+<p>Android KTX is organized into modules. Each module contains one or more packages.</p>
+<p>When you use a module, include a dependency for each Android KTX artifact in your app&#39;s <code>build.gradle</code> file. Remember to append the version to the artifact. For example, if you use the core-ktx module, the fully-formed dependency will look something like this:</p>
+<pre><code>dependencies {
+    implementation &#39;androidx.core:core-ktx:1.0.0-alpha1&#39;
+}</code></pre>
+<h2>Modules</h2>
+<p>Android KTX is composed of the following Maven artifacts. For API reference documentation, click on the specific package name and see the Extension functions summary.</p>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>Module (artifact)</strong></p>
+</td><td colspan="1" rowspan="1"><p><strong>Version</strong></p>
+</td><td colspan="1" rowspan="1"><p><strong>Package</strong></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>androidx.core:core-ktx</p>
+</td><td colspan="1" rowspan="1"><p>1.0.0-alpha1</p>
+</td><td colspan="1" rowspan="1"><p>See <a href="https://developer.android.com/kotlin/ktx#core-packages" target="_blank">all the core packages</a> below.</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>androidx.fragment:fragment-ktx</p>
+</td><td colspan="1" rowspan="1"><p>1.0.0-alpha1</p>
+</td><td colspan="1" rowspan="1"><p><a href="https://developer.android.com/reference/kotlin/androidx/fragment/app/package-summary#extension-functions-summary" target="_blank">androidx.fragment.app</a></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>androidx.palette:palette-ktx</p>
+</td><td colspan="1" rowspan="1"><p>1.0.0-alpha1</p>
+</td><td colspan="1" rowspan="1"><p><a href="https://developer.android.com/reference/kotlin/androidx/palette/graphics/package-summary#extension-functions-summary" target="_blank">androidx.palette.graphics</a></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>androidx.sqlite:sqlite-ktx</p>
+</td><td colspan="1" rowspan="1"><p>1.0.0-alpha1</p>
+</td><td colspan="1" rowspan="1"><p><a href="https://developer.android.com/reference/kotlin/androidx/sqlite/db/package-summary#extension-functions-summary" target="_blank">androidx.sqlite.db</a></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>androidx.collection:collection-ktx</p>
+</td><td colspan="1" rowspan="1"><p>1.0.0-alpha1</p>
+</td><td colspan="1" rowspan="1"><p><a href="https://developer.android.com/reference/kotlin/androidx/collection/package-summary#extension-functions-summary" target="_blank">androidx.collection</a></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>androidx.lifecycle:lifecycle-viewmodel-ktx</p>
+</td><td colspan="1" rowspan="1"><p>2.0.0-alpha1</p>
+</td><td colspan="1" rowspan="1"><p><a href="https://developer.android.com/reference/kotlin/androidx/lifecycle/package-summary#extension-functions-summary" target="_blank">androidx.lifecycle</a></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>androidx.lifecycle:lifecycle-reactivestreams-ktx</p>
+</td><td colspan="1" rowspan="1"><p>2.0.0-alpha1</p>
+</td><td colspan="1" rowspan="1"><p><a href="https://developer.android.com/reference/kotlin/androidx/lifecycle/package-summary#extension-functions-summary" target="_blank">androidx.lifecycle</a></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>android.arch.navigation:navigation-common-ktx</p>
+</td><td colspan="1" rowspan="1"><p>1.0.0-alpha01</p>
+</td><td colspan="1" rowspan="1"><p><a href="https://developer.android.com/reference/kotlin/androidx/navigation/package-summary#extension-functions-summary" target="_blank">androidx.navigation</a></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>android.arch.navigation:navigation-fragment-ktx</p>
+</td><td colspan="1" rowspan="1"><p>1.0.0-alpha01</p>
+</td><td colspan="1" rowspan="1"><p><a href="https://developer.android.com/reference/kotlin/androidx/navigation/fragment/package-summary#extension-functions-summary" target="_blank">androidx.navigation.fragment</a></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>android.arch.navigation:navigation-runtime-ktx</p>
+</td><td colspan="1" rowspan="1"><p>1.0.0-alpha01</p>
+</td><td colspan="1" rowspan="1"><p><a href="https://developer.android.com/reference/kotlin/androidx/navigation/package-summary#extension-functions-summary" target="_blank">androidx.navigation</a></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>android.arch.navigation:navigation-testing-ktx</p>
+</td><td colspan="1" rowspan="1"><p>1.0.0-alpha01</p>
+</td><td colspan="1" rowspan="1"><p><a href="https://developer.android.com/reference/kotlin/androidx/navigation/testing/package-summary#extension-functions-summary" target="_blank">androidx.navigation.testing</a></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>android.arch.navigation:navigation-ui-ktx</p>
+</td><td colspan="1" rowspan="1"><p>1.0.0-alpha01</p>
+</td><td colspan="1" rowspan="1"><p><a href="https://developer.android.com/reference/kotlin/androidx/navigation/ui/package-summary#extension-functions-summary" target="_blank">androidx.navigation.ui</a></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>android.arch.work:work-runtime-ktx</p>
+</td><td colspan="1" rowspan="1"><p>1.0.0-alpha01</p>
+</td><td colspan="1" rowspan="1"><p><a href="https://developer.android.com/reference/kotlin/androidx/work/ktx/package-summary#extension-functions-summary" target="_blank">androidx.work.ktx</a></p>
+</td></tr>
+</table>
+<h2>Examples</h2>
+<p>Android KTX is an <a href="https://developer.android.com/jetpack/" target="_blank">Android Jetpack</a> foundation component. See it in use in the <a href="https://github.com/googlesamples/android-sunflower" target="_blank">Sunflower</a> demo app.</p>
+<p>The examples below demonstrate a few of the Android KTX extension functions.</p>
+<h3><strong>androidx.core:core-ktx</strong></h3>
+<p>Kotlin</p>
+<pre><code>sharedPreferences.edit()
+    .putBoolean(&#34;key&#34;, value)
+    .apply()</code></pre>
+<p>Kotlin + KTX</p>
+<pre><code>sharedPreferences.edit {
+    putBoolean(&#34;key&#34;, value)
+}</code></pre>
+<p>Kotlin</p>
+<pre><code>view.viewTreeObserver.addOnPreDrawListener(
+    object : ViewTreeObserver.OnPreDrawListener {
+        override fun onPreDraw(): Boolean {
+            viewTreeObserver.removeOnPreDrawListener(this)
+            actionToBeTriggered()
+            return true
+        }
+    }
+)</code></pre>
+<p>Kotlin + KTX</p>
+<pre><code>view.doOnPreDraw {
+     actionToBeTriggered()
+}</code></pre>
+<h3><strong>androidx.sqlite:sqlite-ktx</strong></h3>
+<p>Kotlin</p>
+<pre><code>db.beginTransaction()
+try {
+    // insert data
+    db.setTransactionSuccessful()
+} finally {
+    db.endTransaction()
+}</code></pre>
+<p>Kotlin + KTX</p>
+<pre><code>db.transaction {
+    // insert data
+}</code></pre>
+<h3><strong>androidx.fragment:fragment-ktx</strong></h3>
+<p>Kotlin</p>
+<pre><code>supportFragmentManager
+    .beginTransaction()
+    .replace(R.id.my_fragment_container, myFragment, FRAGMENT_TAG)
+    .commitAllowingStateLoss()</code></pre>
+<p>Kotlin + KTX</p>
+<pre><code>supportFragmentManager.transaction(allowStateLoss = true) {
+            replace(R.id.my_fragment_container, myFragment, FRAGMENT_TAG)
+        }</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="UI Automation" duration="30">
+        <p><img style="max-width: 624.00px" src="img/7ce9275ce40254e6.png"></p>
+<p>We all have (should have) automated tests to ensure our application&#39;s quality and give our best experience to the user. All of them are written with Espresso from Google. Even though Espresso is working really well, the code readability is quite low.</p>
+<p>Let&#39;s look at some of the examples of how we write tests with Espresso:</p>
+<pre><code>onView(allOf(withId(R.id.price_item), hasDescendant(withText(&#34;Standard Rate&#34;))))
+        .check(matches(withEffectiveVisibility(Visibility.VISIBLE)));</code></pre>
+<p>This is an example just to check the visibility and you can see that it&#39;s not looking that good. As developers, we want to improve not just our codebase quality, but also our implementation of tests as well.</p>
+<p>This is why we should use Kakao! </p>
+<p><img style="max-width: 100.50px" src="img/c7723a91e3e6835d.png"></p>
+<p>The library that will make you enjoy writing automated tests like you are drinking a hot chocolate!</p>
+<p>Kakao is a nice and simple DSL for Espresso in Kotlin.</p>
+<h3>Benefits</h3>
+<ul>
+<li>Readability</li>
+<li>Reusability</li>
+<li>Extensible DSL</li>
+</ul>
+<h3>How to use it?</h3>
+<h4>Create Screen</h4>
+<p>Create your entity Screen where you will add the views involved in the interactions of the tests:</p>
+<pre><code>class FormScreen : Screen&lt;FormScreen&gt;(){}</code></pre>
+<p>Screen can represent the whole user interface or a portion of UI. If you are using Page Object pattern you can put the interactions of Kakao inside the Page Objects.</p>
+<h4>Create KViews</h4>
+<p>Screen contains KViews, these are the Android Framework views where you want to do the interactions:</p>
+<pre><code>class FormScreen : Screen&lt;FormScreen&gt;(){
+    val phone = KView { withId(R.id.phone)}
+    val email = KEditText { withId(R.id.email)}
+    val submit = KButton { withId(R.id.submit)}
+}</code></pre>
+<p>Kakao provides different types depending on the type of view:</p>
+<ul>
+<li><code>KView</code></li>
+<li><code>KEditText</code></li>
+<li><code>KTextView</code></li>
+<li><code>KButton</code></li>
+<li><code>KImageView</code></li>
+<li><code>KWebView</code></li>
+<li><code>KCheckbox</code></li>
+<li><code>KViewPager</code></li>
+<li><code>KSeekBar</code></li>
+<li>and more</li>
+</ul>
+<p>Every KView contains matchers to retrieve the view involved in the ViewInteraction. Some examples of matchers provided by Kakao:</p>
+<ul>
+<li><code>withId</code></li>
+<li><code>withText</code></li>
+<li><code>withContentDescription</code></li>
+<li><code>withDrawable</code></li>
+<li><code>withBackgroundColor</code></li>
+<li>and more</li>
+</ul>
+<p>Like in Espresso you can combine different matchers:</p>
+<pre><code>val email = KEditText { 
+    withId(R.id.email)
+    withText(R.string.email)
+}</code></pre>
+<p>And you can use your custom matchers:</p>
+<pre><code>val email = KEditText { 
+    withId(R.id.email)
+    matches { MyCustomMatcher.matches(position) }
+}</code></pre>
+<p>Write the interaction.</p>
+<p>The syntax of the test with Kakao is very easy, once you have the Screen and the <code>KView</code>s defined, you only have to apply the actions or assertions like in Espresso:</p>
+<pre><code>val screen = FormScreen()
+screen {
+    phone {
+       hasText(&#34;971201771&#34;)
+    }
+    button {
+       click()
+    }
+}</code></pre>
+<p>Kakao provides multiple actions/assertions based on Espresso. Furthermore, you can combine them, just like the matchers. You can use your custom assertions or your custom actions too:</p>
+<pre><code>val screen = FormScreen()
+screen {
+    phone {
+       assert { MyCustomAssertion.isThaiNumber() }
+    }
+    button {
+       act { MyCustomAction.clickOnTheCorner() }
+    }
+}</code></pre>
+<h3>Exercise: Convert <code>LocationsActivityTest.java</code> to a kakao test.</h3>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Kotlin hidden costs" duration="10">
+        <p><a href="https://willowtreeapps.com/ideas/kotlins-hidden-costs-android-benchmarks" target="_blank">https://willowtreeapps.com/ideas/kotlins-hidden-costs-android-benchmarks</a></p>
+<p><a href="https://medium.com/@BladeCoder/exploring-kotlins-hidden-costs-part-1-fbb9935d9b62" target="_blank">https://medium.com/@BladeCoder/exploring-kotlins-hidden-costs-part-1-fbb9935d9b62</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Kotlin Multiplatform" duration="10">
+        <p><a href="https://www.kotlindevelopment.com/kotlin-multiplatform-in-action/" target="_blank">https://www.kotlindevelopment.com/kotlin-multiplatform-in-action/</a></p>
+<p><a href="https://kotlinlang.org/docs/reference/multiplatform.html" target="_blank">https://kotlinlang.org/docs/reference/multiplatform.html</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Tips &amp; Tricks" duration="30">
+        <h3>LAZY LOADING</h3>
+<p>There are several benefits to lazy loading. Lazy loading can result in faster startup time, since loading is deferred to when the variable is accessed. This is particularly useful in using Kotlin for an Android app as opposed to a server app. For Android apps, we want to reduce app startup time so that the user sees the app content faster, rather than sitting at an initial loading screen.</p>
+<p>Lazy loading like this is also more memory efficient, as we only load the resource into memory if it is called upon. Memory usage is important on mobile platforms like Android, since phones have limited, shared resources. For example, if you are creating a shopping app, and there is a possibility that users will only browse your selection, you could have the actual purchasing API be lazy loaded:</p>
+<pre><code>val purchasingApi: PurchasingApi by lazy {
+    val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl(API_URL)
+            .addConverterFactory(MoshiConverterFactory.create())
+            .build()
+    retrofit.create(PurchasingApi::class.java)
+}</code></pre>
+<p>By using lazy loading like this, if the user never attempts to check out in the app, you will never load the <code>PurchasingApi</code>, and therefore will not use up the resources it would take.</p>
+<p>Lazy loading is also a good way to encapsulate initialization logic:</p>
+<pre><code>// bounds is created as soon as the first call to bounds is made
+val bounds: RectF by lazy { 
+    RectF(0f, 0f, width.toFloat(), height.toFloat()) 
+}</code></pre>
+<p>As soon as the first reference to bounds is made, the <code>RectF</code> is created, using the view&#39;s current width and height, saving us from having to explicitly create this <code>RectF</code>, then set it later on.</p>
+<h3>CUSTOM GETTERS/SETTERS</h3>
+<p>Kotlin&#39;s custom getters and setters use the structure of a model, but specify custom behavior to get and set the fields. When using custom models for certain frameworks, such as the Parse SDK, you are fetching values that are not actually local variables in the class, but are stored and retrieved in some custom way, such as from JSON. By using custom defined getters and setters, we can simplify the access:</p>
+<pre><code>@ParseClassName(&#34;Book&#34;)
+class Book : ParseObject() {
+
+    // getString() and put() are methods that come from ParseObject
+    var name: String
+        get() = getString(&#34;name&#34;)
+        set(value) = put(&#34;name&#34;, value)
+
+    var author: String
+        get() = getString(&#34;author&#34;)
+        set(value) = put(&#34;author&#34;, value)
+}</code></pre>
+<p>Fetching these values would look similar to using property access syntax with other models:</p>
+<pre><code>val book = api.getBook()
+textAuthor.text = book.author</code></pre>
+<p>Now if your model needed to change from Parse to some other data source, your code would potentially only need to be changed in one place.</p>
+<h3>LAMBDAS</h3>
+<p>Lambdas reduce the overall lines of code in a source file and allow for functional programming. While lambdas are currently possible with Android, Kotlin takes them a step further by ensuring you don&#39;t have to deal with <a href="https://github.com/orfjackal/retrolambda" target="_blank">Retrolambda</a> or changing the way your build is configured.</p>
+<p>For example, an on-click listener would look like:</p>
+<pre><code>button.setOnClickListener { view -&gt;
+    startDetailActivity()
+}</code></pre>
+<p>It even works with return values:</p>
+<pre><code>toolbar.setOnLongClickListener { 
+    showContextMenu()
+    true
+}</code></pre>
+<p>The Android SDK contains plenty of cases where you are setting a listener or implementing a single method. Lambdas work great in those circumstances.</p>
+<h3>DATA CLASSES</h3>
+<p>Data classes simplify classes, adding <code>equals()</code>, <code>hashCode()</code>, <code>copy()</code>, and <code>toString()</code> methods automatically. They clarify the intention of the model and what should go in it, separating pure data from business logic.</p>
+<p>Take a look at this data class as an example:</p>
+<pre><code>data class User(val name: String, val age: Int)</code></pre>
+<p>That&#39;s it. Nothing else is needed to make this class work. If you are using data classes with something like Gson or another JSON parsing library, you can create the default constructor with default values like so:</p>
+<pre><code>// Example with Gson&#39;s @SerializedName annotation
+data class User(
+    @SerializedName(&#34;name&#34;) val name: String = &#34;&#34;,
+    @SerializedName(&#34;age&#34;) val age: Int = 0
+)</code></pre>
+<h3>COLLECTION FILTERING</h3>
+<p>Collections are dealt with quite often when working with an API. More often then not, you want to filter or modify the contents of that collection. By using Kotlin&#39;s collection filtering, adding clarity and making your code more succinct. It&#39;s easier to tell what your resulting list should contain with collection filtering like the following:</p>
+<pre><code>val users = api.getUsers()
+// we only want to show the active users in one list
+val activeUsersNames = items.filter { 
+    it.active // the &#34;it&#34; variable is the parameter for single parameter lamdba functions
+}
+adapter.setUsers(activeUsers)</code></pre>
+<p>Filtering a collection using the built-in Kotlin methods is very comparable to other functional programming languages too, such as Java 8 streams or Swift collection types. Being able to filter collections in a unified way helps when talking with team members about what operations need to be done to get a list down to the right elements to display.</p>
+<h3>OBJECT EXPRESSIONS</h3>
+<p>Object expressions allow for strict singleton definition so there&#39;s no mistaking it for a class that can be instantiated. They also ensure that you do not have to store singletons somewhere like in the Application class or as a static class variable.</p>
+<p>For example, if I have a utility class with static thread-related methods I want to access throughout the app:</p>
+<pre><code>package com.savvyapps.example.util
+
+import android.os.Handler
+import android.os.Looper
+
+// notice that this is object instead of class
+object ThreadUtil {
+
+    fun onMainThread(runnable: Runnable) {
+        val mainHandler = Handler(Looper.getMainLooper())
+        mainHandler.post(runnable)
+    }
+}</code></pre>
+<p><code>ThreadUtil</code> is called later in the typical way you would call a static class method:</p>
+<pre><code>ThreadUtil.onMainThread(runnable)</code></pre>
+<p>This means there&#39;s no more declaring a constructor as private, or having to figure out where the static instance is stored. Objects are essentially first class citizens of the language. In a similar way, we create objects instead of anonymous inner classes:</p>
+<pre><code>viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+    override fun onPageScrollStateChanged(state: Int) {}
+
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+
+    override fun onPageSelected(position: Int) {
+        bindUser(position)
+    }
+});</code></pre>
+<p>Both of these do essentially the same thing -- create a single instance of a class as a declared object.</p>
+<h3>COMPANION OBJECT</h3>
+<p>At a glance, Kotlin appears to be missing static variables and methods. In a sense, it does not have these concepts, but instead has the idea of companion objects. These companion objects are singleton objects within a class which contain the methods and variables you might want to access in a static fashion. A companion object allows defined constants and methods, similar to static in Java. With it, you can follow the <a href="https://developer.android.com/reference/android/app/Fragment.html" target="_blank">newInstance</a> pattern of fragments.</p>
+<p>Here&#39;s a look at a companion object in its simplest form:</p>
+<pre><code>class User {
+
+    companion object {
+        const val DEFAULT_USER_AGE = 30
+    }
+}
+
+// later, accessed like you would a static variable:
+user.age = User.DEFAULT_USER_AGE</code></pre>
+<p>In Android, we commonly use static methods and variables to create static factories for fragments or activity intents. For example:</p>
+<pre><code>class ViewUserActivity : AppCompatActivity() {
+
+    companion object {
+
+        const val KEY_USER = &#34;user&#34;
+
+        fun intent(context: Context, user: User): Intent {
+            val intent = Intent(context, ViewUserActivity::class.java)
+            intent.putExtra(KEY_USER, user)
+            return intent
+        }
+    }
+    
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_cooking)
+        
+        val user = intent.getParcelableExtra&lt;User&gt;(KEY_USER)
+        //...
+    }
+}</code></pre>
+<p>The call to create this Intent looks and feels familiar to what you would see in Java:</p>
+<pre><code>val intent = ViewUserActivity.intent(context, user)
+startActivity(intent)</code></pre>
+<p>This pattern is great, since it reduces the likelihood that an Intent or Fragment would be missing the needed data to display a user or whatever content it is meant to display. Companion objects are a way to keep some form of static access within Kotlin, and should be used accordingly.</p>
+<h3>GLOBAL CONSTANTS</h3>
+<p>Kotlin allows you to define constants that span across an entire app in one place (if applicable). Typically, constants should have their scope reduced as much as possible, but when scope needs to be global this is a great way to do so without having to go through a constants class.</p>
+<pre><code>package com.savvyapps.example
+
+import android.support.annotation.StringDef
+
+// Note that this is not a class, or an object
+const val PRESENTATION_MODE_PRESENTING = &#34;presenting&#34;
+const val PRESENTATION_MODE_EDITING = &#34;editing&#34;</code></pre>
+<p>These can be used as constants anywhere in your project:</p>
+<pre><code>import com.savvyapps.example.PRESENTATION_MODE_EDITING
+
+val currentPresentationMode = PRESENTATION_MODE_EDITING</code></pre>
+<p>Keep in mind that constants should be kept to as small a scope as possible to reduce complexity. If you have a value that only relates to the user class, put the value there in a companion object instead.</p>
+<h3>OPTIONAL PARAMETERS</h3>
+<p>Optional parameters make method calls more flexible without having to pass null or a default value. This is especially useful when defining animations.</p>
+<p>For example, if you want to have a method defined for fading out views throughout your app, but only in special circumstances do you need to specify the duration, you can define your method like so:</p>
+<pre><code>fun View.fadeOut(duration: Long = 500): ViewPropertyAnimator {
+    return animate()
+            .alpha(0.0f)
+            .setDuration(duration)
+}</code></pre>
+<pre><code>icon.fadeOut() // fade out with default time (500)
+icon.fadeOut(1000) // fade out with custom time</code></pre>
+<h3>EXTENSIONS</h3>
+<p>Extensions are useful because they allow you to add to the functionality of a class without having to inherit from it. For example, have you ever wished Activity had some method, such as hideKeyboard()? With extensions, you can accomplish this easily:</p>
+<pre><code>fun Activity.hideKeyboard(): Boolean {
+    val view = currentFocus
+    view?.let {
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) 
+                as InputMethodManager
+        return inputMethodManager.hideSoftInputFromWindow(view.windowToken,
+                InputMethodManager.HIDE_NOT_ALWAYS)
+    }
+    return false
+}</code></pre>
+<p>With extensions you can easily eliminate the need to have utility classes or methods, and can really improve the readability of your code. We like to take this a step further, and use extensions to improve the organization of our code as well. For example, imagine that you have a basic model, such as an article. This article is probably treated as a data class, which has been fetched from a source such as an API:</p>
+<pre><code>class Article(val title: String, val numberOfViews: Int, val topic: String)</code></pre>
+<p>Say that you want to determine the relevance of an Article to a user based on some formula. Should you put this directly in the Article class? Some would say that model should only hold the data from the API, nothing more. In this case, extensions can once again work great for you:</p>
+<pre><code>// In another Kotlin file, possibly named ArticleLogic.kt or something similar
+fun Article.isArticleRelevant(user: User): Boolean {
+    return user.favoriteTopics.contains(topic)
+}</code></pre>
+<p>At the present, this is a simple check to see if the user has the topic of the Article in a list of their favorite topics. But, down the line, the logic might change to where you want to check other attributes of the user as well. Since this logic is held somewhat independently from the Article model, you can change it and feel confident about the purpose of the method and its ability to be changed.</p>
+<h3>LATEINIT</h3>
+<p>A major feature of Kotlin is its dedication to null safety. lateinit provides an easy way to both have null safety and initialize a variable the way Android needs you to. This is a great language feature, but nonetheless takes some getting used to after doing extensive Java development. One of the ideas is that a field must be assigned right away, or declared with the possibility of being null:</p>
+<pre><code>var total = 0 // declared right away, no possibility of null
+var toolbar: Toolbar? = null // could be a toolbar, could be null</code></pre>
+<p>This language feature can be frustrating when dealing with Android layouts. This is because we know that the views are going to exist within the <code>Activity</code> or <code>Fragment</code>, but we cannot declare them right away since it must be done in <code>onCreate</code>/<code>onCreateView</code> after the layout is inflated. You could deal with this by asserting checks in each place you touch the view throughout the <code>Activity</code>, but this would be frustrating to deal with and unnecessary from a null check point of view. Instead, you can use the lateinit modifier:</p>
+<pre><code>lateinit var toolbar: Toolbar</code></pre>
+<p>Now, it is up to you as the developer to not reference toolbar until it has actually been initialized. This works great when used in conjunction with a library like <a href="https://github.com/JakeWharton/butterknife" target="_blank">Butter Knife</a>:</p>
+<pre><code>@BindView(R.id.toolbar) lateinit var toolbar: Toolbar
+
+override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        ButterKnife.bind(this)
+        // you can now reference toolbar with no problems!
+        toolbar.setTitle(&#34;Hello There&#34;)
+}</code></pre>
+<h3>SAFE TYPECASTING</h3>
+<p>Certain Android conventions require safe typecasting because normal typecasting would cause an exception. For example, a typical way of creating a Fragment in an Activity is to first check and see if it exists already, using the <code>FragmentManager</code>. If it does not, you&#39;d create it and add it to the Activity. When first looking at typecasting in Kotlin, you might implement this like so:</p>
+<pre><code>var feedFragment: FeedFragment? = supportFragmentManager
+    .findFragmentByTag(TAG_FEED_FRAGMENT) as FeedFragment</code></pre>
+<p>This would actually cause a crash. When you call &#39;as&#39;, it attempts a cast on the object, which in this case, would be null and would cause a null pointer exception. You need to instead call &#39;<code>as?</code>&#39;, meaning something along the lines of &#34;cast the object and return null if the cast fails.&#34; </p>
+<p>Altogether, the proper initialization of a Fragment would appear like:</p>
+<pre><code>var feedFragment: FeedFragment? = supportFragmentManager
+    .findFragmentByTag(TAG_FEED_FRAGMENT) as? FeedFragment
+if (feedFragment == null) {
+    feedFragment = FeedFragment.newInstance()
+    supportFragmentManager.beginTransaction()
+            .replace(R.id.root_fragment, feedFragment, TAG_FEED_FRAGMENT)
+            .commit()
+}</code></pre>
+<h3>LEVERAGING LET</h3>
+<p>let permits you to execute a block if the value of the object is not null. This allows you to avoid null checks and makes code more readable. In Java this looks like:</p>
+<pre><code>if (currentUser != null) {
+    text.setText(currentUser.name)
+}</code></pre>
+<p>Whereas is Kotlin it becomes:</p>
+<pre><code>user?.let {
+    println(it.name)
+}</code></pre>
+<p>In this case, along with being more reader friendly, let automatically assigns user to an un-nullable variable, it, which we can continue to use without fear of it being nulled out.</p>
+<h3>ISNULLOREMPTY | ISNULLORBLANK</h3>
+<p>We need to validate many times throughout developing an Android app. If you&#39;ve dealt with this without using Kotlin, you may have discovered the TextUtils class in Android. The <code>TextUtils</code> class looks like:</p>
+<pre><code>if (TextUtils.isEmpty(name)) {
+    // alert the user!
+}</code></pre>
+<p>In this example, you would realize that a user could set their username to just white spaces and it would pass validation. <code>isNullOrEmpty</code> and <code>isNullOrBlank</code> are built into the Kotlin language and eliminate the need for <code>TextUtils.isEmpty(someString)</code>, and provide the additional benefit of checking for just whitespace. You can use the two whenever appropriate:</p>
+<pre><code>// If we do not care about the possibility of only spaces...
+if (number.isNullOrEmpty()) {
+    // alert the user to fill in their number!
+}
+
+// when we need to block the user from inputting only spaces
+if (name.isNullOrBlank()) {
+    // alert the user to fill in their name!
+}</code></pre>
+<p>Validation of fields is something that is common during a sign-up process in an app. These built-in methods are great for validating fields and alerting the user if something doesn&#39;t look right. You could even leverage extension methods to make some custom validation, such as for email addresses:</p>
+<pre><code>fun TextInputLayout.isValidForEmail(): Boolean {
+    val input = editText?.text.toString()
+    if (input.isNullOrBlank()) {
+        error = resources.getString(R.string.required)
+        return false
+    } else if (emailPattern.matcher(input).matches()) {
+        error = resources.getString(R.string.invalid_email)
+        return false
+    } else {
+        error = null
+        return true
+    }
+}</code></pre>
+<h3>AVOIDING SINGLE ABSTRACT METHODS FOR KOTLIN CLASSES</h3>
+<p>This tip allows you to use lambdas, which allows cleaner, more succinct code. For example, when working in Java, it is very typical to have a simple listener class, such as:</p>
+<pre><code>public interface OnClickListener {
+    
+    void onClick(View v);
+}</code></pre>
+<p>A great feature of Kotlin is that it performs <a href="https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions" target="_blank">SAM (Single Abstract Method) conversions</a> for Java classes. A click listener in Java that appears like:</p>
+<pre><code>textView.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        // do something
+    }
+});</code></pre>
+<p>can be reduced in Kotlin to:</p>
+<pre><code>textView.setOnClickListener { view -&gt;
+    // do something
+}</code></pre>
+<p>But, the same cannot be done for SAM interfaces created in Kotlin. This is <a href="https://youtrack.jetbrains.com/issue/KT-7770" target="_blank">by design</a> but can be a bit surprising and frustrating for newer Kotlin users. If the same interface were defined in Kotlin, the listener would have to look more like:</p>
+<pre><code>view.setOnClickListener(object : OnClickListener {
+    override fun onClick(v: View?) {
+        // do things
+    }
+})</code></pre>
+<p>To reduce this, you would instead want to write out your listeners in the class like so:</p>
+<pre><code>private var onClickListener: ((View) -&gt; Unit)? = null
+
+fun setOnClickListener(listener: (view: View) -&gt; Unit) {
+    onClickListener = listener
+}
+
+// later, to invoke
+onClickListener?.invoke(this)</code></pre>
+<p>Which would bring you back to the simpler lambda syntax that automatic SAM conversion makes possible.</p>
+<h3>COROUTINES INSTEAD OF ASYNCTASK</h3>
+<p>Because AsyncTask is clunky and tends to cause leaks, we prefer to use coroutines as they improve readability and don&#39;t leak memory. <a href="https://github.com/Kotlin/kotlinx.coroutines/blob/master/coroutines-guide.md" target="_blank">Check out this resource</a> to learn the basics of coroutines. Note that since coroutines are experimental in Kotlin 1.1, we still recommend <a href="https://github.com/ReactiveX/RxJava" target="_blank">RxJava</a> for most async purposes.</p>
+<p>At this time, coroutines require an additional dependency:</p>
+<pre><code>compile &#34;org.jetbrains.kotlinx:kotlinx-coroutines-android:0.13&#34;</code></pre>
+<p>and in the gradle.properties file:</p>
+<pre><code>kotlin.coroutines=enable</code></pre>
+<p>Using coroutines, we can write simple, inline asynchronous code, and still modify the UI in a direct way:</p>
+<pre><code>fun bindUser() = launch(UI) {
+   // Call to API or some other things that takes time
+    val user = Api.getUser().execute()
+    // continue doing things with the ui
+    text.text = user.name
+}</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="This is not over yet" duration="60">
+        <h3>What did we learn?</h3>
+<h3>How would you use Kotlin in your daily projects.</h3>
+<h3>Useful links</h3>
+<p><a href="https://antonioleiva.com/" target="_blank">https://antonioleiva.com/</a> </p>
+<p><a href="https://medium.com/keepsafe-engineering/lessons-from-converting-an-app-to-100-kotlin-68984a05dcb6" target="_blank">https://medium.com/keepsafe-engineering/lessons-from-converting-an-app-to-100-kotlin-68984a05dcb6</a></p>
+<p><a href="https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-1-1f15e387e536" target="_blank">https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-1-1f15e387e536</a></p>
+<p><a href="https://www.cs.kent.ac.uk/people/staff/dat/miranda/whyfp90.pdf" target="_blank">https://www.cs.kent.ac.uk/people/staff/dat/miranda/whyfp90.pdf</a></p>
+<p><a href="https://kotlinlang.org/docs/tutorials/edu-tools-learner.html" target="_blank">https://kotlinlang.org/docs/tutorials/edu-tools-learner.html</a></p>
+<p><a href="https://savvyapps.com/blog/kotlin-tips-android-development" target="_blank">https://savvyapps.com/blog/kotlin-tips-android-development</a></p>
+<p><a href="https://proandroiddev.com/wow-declaring-classes-in-kotlin-dbcb56388443" target="_blank">https://proandroiddev.com/wow-declaring-classes-in-kotlin-dbcb56388443</a></p>
+<p><a href="https://www.kotlindevelopment.com/typical-kotlin/" target="_blank">https://www.kotlindevelopment.com/typical-kotlin/</a></p>
+<h3>Open Q&amp;A session</h3>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-49880327-14', 'auto');
+
+    (function() {
+      var gaCodelab = '';
+      if (gaCodelab) {
+        ga('create', gaCodelab, 'auto', {name: 'codelab'});
+      }
+
+      var gaView;
+      var parts = location.search.substring(1).split('&');
+      for (var i = 0; i < parts.length; i++) {
+        var param = parts[i].split('=');
+        if (param[0] === 'viewga') {
+          gaView = param[1];
+          break;
+        }
+      }
+      if (gaView && gaView !== gaCodelab) {
+        ga('create', gaView, 'auto', {name: 'view'});
+      }
+    })();
+  </script>
+
+</body>
+</html>
