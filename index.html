@@ -7,8 +7,8 @@
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
   <title>Kotlin Workshop</title>
-  <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-  <link rel="import" href="../../elements/codelab.html">
+  <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="elements/codelab.html">
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <style is="custom-style">
     body {
@@ -16,14 +16,14 @@
       background: var(--google-codelab-background, #F8F9FA);
     }
   </style>
-  
+
 </head>
 <body unresolved class="fullbleed">
 
   <google-codelab title="Kotlin Workshop"
                   environment="web"
                   feedback-link="https://github.com/googlecodelabs/kotlin-workshop/issues">
-    
+
       <google-codelab-step label="Introduction" duration="20">
         <h2>The plan for today</h2>
 <ul>
@@ -37,7 +37,7 @@
 
 
       </google-codelab-step>
-    
+
       <google-codelab-step label="Setting up" duration="10">
         <h3>General overview of the agenda</h3>
 <p><strong>Getting started</strong></p>
@@ -92,7 +92,7 @@
 
 
       </google-codelab-step>
-    
+
       <google-codelab-step label="Kotlin mindset" duration="20">
         <h2>History</h2>
 <h3>Started in 2010 by JetBrains</h3>
@@ -159,7 +159,7 @@ fun onLoad() {
 
 
       </google-codelab-step>
-    
+
       <google-codelab-step label="Kotlin is nicer than Java in 18 steps" duration="30">
         <h3>0# <a href="https://kotlinlang.org/docs/reference/java-interop.html" target="_blank">Java Interoperability</a></h3>
 <p>Kotlin is 100% interoperable with Java. You can literally continue work on your old Java projects using Kotlin. All your favorite Java frameworks are still available, and whatever framework you&#39;ll write in Kotlin is easily adopted by your stubborn Java loving friend.</p>
@@ -333,7 +333,7 @@ numbers.filter { it.isPrime() }</code></pre>
 
 
       </google-codelab-step>
-    
+
       <google-codelab-step label="Architecture" duration="30">
         <h3>General presentation architecture we chose</h3>
 <p>MVVM + Dagger + RxJava/RxKotlin</p>
@@ -359,7 +359,7 @@ numbers.filter { it.isPrime() }</code></pre>
 
 
       </google-codelab-step>
-    
+
       <google-codelab-step label="Migrate to Kotlin" duration="30">
         <h3>Installing the Kotlin plugin</h3>
 <p>The Kotlin plugin is bundled with Android Studio starting from <a href="https://developer.android.com/studio/preview/index.html" target="_blank">version 3.0</a>. If you use an earlier version, you&#39;ll need to install the Kotlin plugin. <code>Go to File | Settings | Plugins | Install JetBrains plugin...</code> and then search for and install Kotlin. If you are looking at the &#34;Welcome to Android Studio&#34; screen, choose <code>Configure | Plugins | Install JetBrains plugin...</code> You&#39;ll need to restart the IDE after this completes.</p>
@@ -437,7 +437,7 @@ apply plugin: &#39;kotlin-android&#39;</code></pre>
 
 
       </google-codelab-step>
-    
+
       <google-codelab-step label="Solving migration issues" duration="15">
         <h3>Exercise: Migrate <code>MainActivity.java</code> class to Kotlin 💥</h3>
 <h3>Android Frameworks Using Annotation Processing</h3>
@@ -477,7 +477,7 @@ internal fun sayHello() {
 <p><strong>Dagger</strong></p>
 <p><a href="https://google.github.io/dagger//" target="_blank">Dagger</a> is a dependency injection framework. If you&#39;re not familiar with it yet, you can read its <a href="https://google.github.io/dagger//users-guide.html" target="_blank">user&#39;s guide</a>. We&#39;ve converted <a href="https://github.com/google/dagger/tree/master/examples/simple" target="_blank">the coffee example</a> described in this guide into Kotlin, and you can find the result <a href="https://github.com/JetBrains/kotlin-examples/tree/master/gradle/kotlin-dagger" target="_blank">here</a>. The Kotlin code looks pretty much the same; you can browse the whole example in one <a href="https://github.com/JetBrains/kotlin-examples/tree/master/gradle/kotlin-dagger/src/main/kotlin/Coffee.kt" target="_blank">file</a>.</p>
 <p>As in Java, you use <code>@Inject</code> to annotate the constructor used by Dagger to create instances of a class. Kotlin has a short syntax for declaring a property and a constructor parameter at the same time. To annotate the constructor, use the constructor keyword explicitly and put the <code>@Inject</code> annotation before it:</p>
-<pre><code>class Thermosiphon 
+<pre><code>class Thermosiphon
 @Inject constructor(
         private val heater: Heater
 ) : Pump {
@@ -571,8 +571,8 @@ dependencies {
 }</code></pre>
 <p>This example uses the utility function startActivity creating an intent with no data and starting a new activity, which comes from the <a href="https://github.com/Kotlin/anko" target="_blank">Anko</a> library. To pass some data, you can say <code>startActivity&lt;OtherActivity&gt;(&#34;KEY&#34; to &#34;VALUE&#34;)</code>.</p>
 <p>Note that instead of declaring lambdas in xml like in the following example, you can can bind actions directly in the code:</p>
-<pre><code>&lt;Button 
-    android:layout_width=&#34;wrap_content&#34; 
+<pre><code>&lt;Button
+    android:layout_width=&#34;wrap_content&#34;
     android:layout_height=&#34;wrap_content&#34;
     android:onClick=&#34;@{() -&gt; presenter.onSaveClick(task)}&#34; /&gt;</code></pre>
 <pre><code>// the same logic written in Kotlin code
@@ -584,24 +584,24 @@ button.setOnClickListener { presenter.onSaveClick(task) }</code></pre>
 <p>A pragmatic lightweight dependency injection framework for Kotlin developers. Written in pure Kotlin using functional resolution only: no proxy, no code generation, no reflection!</p>
 <p><strong>Declare a module</strong></p>
 <p>Write with the Koin DSL what you need to assemble:</p>
-<pre><code>// Given some classes 
-class Controller(val service : BusinessService) 
-class BusinessService() 
+<pre><code>// Given some classes
+class Controller(val service : BusinessService)
+class BusinessService()
 
-// just declare it 
-val myModule = module { 
-  single { Controller(get()) } 
-  single { BusinessService() } 
+// just declare it
+val myModule = module {
+  single { Controller(get()) }
+  single { BusinessService() }
 }</code></pre>
 <p><strong>Start Koin</strong></p>
 <p>Use the <code>startKoin()</code> function to start Koin in your application:</p>
-<pre><code>fun main(vararg args : String) { 
+<pre><code>fun main(vararg args : String) {
   // start Koin!
   startKoin(listOf(myModule))
 }</code></pre>
 <p><strong>Inject in Android</strong></p>
 <p>Easy to inject into your Android classes:</p>
-<pre><code>// Just inject in a simple Activity 
+<pre><code>// Just inject in a simple Activity
 class MyActivity() : AppCompatActivity() {
 
     // lazy inject BusinessService into property
@@ -609,7 +609,7 @@ class MyActivity() : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         // or directly get any instance
         val service : BusinessService = get()
     }
@@ -618,7 +618,7 @@ class MyActivity() : AppCompatActivity() {
 
 
       </google-codelab-step>
-    
+
       <google-codelab-step label="Interoperability" duration="10">
         <h3>Calling Java code from Kotlin</h3>
 <p>Kotlin is designed with Java Interoperability in mind. Existing Java code can be called from Kotlin in a natural way, and Kotlin code can be used from Java rather smoothly as well. In this section we describe some details about calling Java code from Kotlin.</p>
@@ -796,7 +796,7 @@ Set&lt;@NotNull String&gt; toSet(@NotNull Collection&lt;@NotNull String&gt; elem
 
 
       </google-codelab-step>
-    
+
       <google-codelab-step label="Solving interoperability issues" duration="30">
         <h3>Debugging Kotlin (java bytecode)</h3>
 <p>It&#39;s important to understand how Kotlin code works and how it influence performance. Fortunately, IntelliJ and Android Studio allow to instantly see bytecode and Java equivalent.</p>
@@ -823,7 +823,7 @@ Set&lt;@NotNull String&gt; toSet(@NotNull Collection&lt;@NotNull String&gt; elem
 
 
       </google-codelab-step>
-    
+
       <google-codelab-step label="Flow control" duration="30">
         <h3>If expression</h3>
 <p>Unlike Java (and other many programming languages), <code>if</code> is an expression in Kotlin because it returns a value. </p>
@@ -918,7 +918,7 @@ for (i in 7 downTo 1 step 2) print(i) //7531</code></pre>
 
 
       </google-codelab-step>
-    
+
       <google-codelab-step label="Functions" duration="30">
         <p>Functions are used to break a large program into smaller and modular chunks, making our program more organised and manageable. </p>
 <p>Functions in Kotlin, the equivalent of Java methods, are declared using the <code>fun</code> keyword and <strong>always have a return value</strong>. Even if we skip the return type, it will still return <code>Unit</code> (an object which is similar to <code>void</code> in Java)</p>
@@ -1051,7 +1051,7 @@ ClassName.Factory.methodName()</code></pre>
 
 
       </google-codelab-step>
-    
+
       <google-codelab-step label="Data classes" duration="20">
         <p>Data classes in Kotlin are the equivalent of <strong>POJO</strong>s (Plain Old Java Objects) and their main purpose is to hold data.</p>
 <p>POJOs generally contain the same concepts every time: </p>
@@ -1116,7 +1116,7 @@ println(contactChanged) //LocationContact(locationId=1, name=Diana, phoneNumber=
 <pre><code>val (locationId, name, phoneNumber) = contactChanged
 println(phoneNumber) //+40744.777.444</code></pre>
 <p>This destructuring is also very useful when iterating over a <code>Map</code> (has some extension functions implemented) in a loop and accessing the key and value pair:</p>
-<pre><code>val map = mapOf(&#34;RO&#34; to &#34;Romania&#34;, &#34;IT&#34; to &#34;Italy&#34;) 
+<pre><code>val map = mapOf(&#34;RO&#34; to &#34;Romania&#34;, &#34;IT&#34; to &#34;Italy&#34;)
 for ((key, value) in map) {
         println(&#34;key:$key, value:$value&#34;) //[first line printed]key:RO, value:Romania
 }</code></pre>
@@ -1129,7 +1129,7 @@ for ((key, value) in map) {
 
 
       </google-codelab-step>
-    
+
       <google-codelab-step label="Coroutines" duration="60">
         <h3>Kotlin coroutines</h3>
 <p>Android&#39;s threading model is just like any other UI framework where a single thread (usually called the &#34;UI thread&#34;) is responsible for rendering user interface, capturing events and various other aspects. Performing long running operations such as network requests, DB queries, heavy computation will freeze the UI which throws an &#34;Application not responding&#34; (ANR) error.</p>
@@ -1190,7 +1190,7 @@ public actual fun &lt;T&gt; async(
 
 
       </google-codelab-step>
-    
+
       <google-codelab-step label="Android KTX" duration="20">
         <p>Android KTX is a set of Kotlin extensions that is part of the Android <a href="https://developer.android.com/jetpack" target="_blank">Jetpack</a> family. It optimizes Jetpack and Android platform APIs for Kotlin use. The purpose of Android KTX is to make Android development with Kotlin more concise, pleasant, and idiomatic by leveraging Kotlin language features such as extension functions/properties, lambdas, named parameters, and parameter default values. Android KTX does not add any new features to the existing Android APIs.</p>
 <p><img style="max-width: 525.50px" src="img/c4851745c8b0305.png"></p>
@@ -1317,7 +1317,7 @@ try {
 
 
       </google-codelab-step>
-    
+
       <google-codelab-step label="UI Automation" duration="30">
         <p><img style="max-width: 624.00px" src="img/7ce9275ce40254e6.png"></p>
 <p>We all have (should have) automated tests to ensure our application&#39;s quality and give our best experience to the user. All of them are written with Espresso from Google. Even though Espresso is working really well, the code readability is quite low.</p>
@@ -1370,12 +1370,12 @@ try {
 <li>and more</li>
 </ul>
 <p>Like in Espresso you can combine different matchers:</p>
-<pre><code>val email = KEditText { 
+<pre><code>val email = KEditText {
     withId(R.id.email)
     withText(R.string.email)
 }</code></pre>
 <p>And you can use your custom matchers:</p>
-<pre><code>val email = KEditText { 
+<pre><code>val email = KEditText {
     withId(R.id.email)
     matches { MyCustomMatcher.matches(position) }
 }</code></pre>
@@ -1404,21 +1404,21 @@ screen {
 
 
       </google-codelab-step>
-    
+
       <google-codelab-step label="Kotlin hidden costs" duration="10">
         <p><a href="https://willowtreeapps.com/ideas/kotlins-hidden-costs-android-benchmarks" target="_blank">https://willowtreeapps.com/ideas/kotlins-hidden-costs-android-benchmarks</a></p>
 <p><a href="https://medium.com/@BladeCoder/exploring-kotlins-hidden-costs-part-1-fbb9935d9b62" target="_blank">https://medium.com/@BladeCoder/exploring-kotlins-hidden-costs-part-1-fbb9935d9b62</a></p>
 
 
       </google-codelab-step>
-    
+
       <google-codelab-step label="Kotlin Multiplatform" duration="10">
         <p><a href="https://www.kotlindevelopment.com/kotlin-multiplatform-in-action/" target="_blank">https://www.kotlindevelopment.com/kotlin-multiplatform-in-action/</a></p>
 <p><a href="https://kotlinlang.org/docs/reference/multiplatform.html" target="_blank">https://kotlinlang.org/docs/reference/multiplatform.html</a></p>
 
 
       </google-codelab-step>
-    
+
       <google-codelab-step label="Tips &amp; Tricks" duration="30">
         <h3>LAZY LOADING</h3>
 <p>There are several benefits to lazy loading. Lazy loading can result in faster startup time, since loading is deferred to when the variable is accessed. This is particularly useful in using Kotlin for an Android app as opposed to a server app. For Android apps, we want to reduce app startup time so that the user sees the app content faster, rather than sitting at an initial loading screen.</p>
@@ -1433,8 +1433,8 @@ screen {
 <p>By using lazy loading like this, if the user never attempts to check out in the app, you will never load the <code>PurchasingApi</code>, and therefore will not use up the resources it would take.</p>
 <p>Lazy loading is also a good way to encapsulate initialization logic:</p>
 <pre><code>// bounds is created as soon as the first call to bounds is made
-val bounds: RectF by lazy { 
-    RectF(0f, 0f, width.toFloat(), height.toFloat()) 
+val bounds: RectF by lazy {
+    RectF(0f, 0f, width.toFloat(), height.toFloat())
 }</code></pre>
 <p>As soon as the first reference to bounds is made, the <code>RectF</code> is created, using the view&#39;s current width and height, saving us from having to explicitly create this <code>RectF</code>, then set it later on.</p>
 <h3>CUSTOM GETTERS/SETTERS</h3>
@@ -1462,7 +1462,7 @@ textAuthor.text = book.author</code></pre>
     startDetailActivity()
 }</code></pre>
 <p>It even works with return values:</p>
-<pre><code>toolbar.setOnLongClickListener { 
+<pre><code>toolbar.setOnLongClickListener {
     showContextMenu()
     true
 }</code></pre>
@@ -1481,7 +1481,7 @@ data class User(
 <p>Collections are dealt with quite often when working with an API. More often then not, you want to filter or modify the contents of that collection. By using Kotlin&#39;s collection filtering, adding clarity and making your code more succinct. It&#39;s easier to tell what your resulting list should contain with collection filtering like the following:</p>
 <pre><code>val users = api.getUsers()
 // we only want to show the active users in one list
-val activeUsersNames = items.filter { 
+val activeUsersNames = items.filter {
     it.active // the &#34;it&#34; variable is the parameter for single parameter lamdba functions
 }
 adapter.setUsers(activeUsers)</code></pre>
@@ -1540,11 +1540,11 @@ user.age = User.DEFAULT_USER_AGE</code></pre>
             return intent
         }
     }
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cooking)
-        
+
         val user = intent.getParcelableExtra&lt;User&gt;(KEY_USER)
         //...
     }
@@ -1582,7 +1582,7 @@ icon.fadeOut(1000) // fade out with custom time</code></pre>
 <pre><code>fun Activity.hideKeyboard(): Boolean {
     val view = currentFocus
     view?.let {
-        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) 
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE)
                 as InputMethodManager
         return inputMethodManager.hideSoftInputFromWindow(view.windowToken,
                 InputMethodManager.HIDE_NOT_ALWAYS)
@@ -1669,7 +1669,7 @@ if (name.isNullOrBlank()) {
 <h3>AVOIDING SINGLE ABSTRACT METHODS FOR KOTLIN CLASSES</h3>
 <p>This tip allows you to use lambdas, which allows cleaner, more succinct code. For example, when working in Java, it is very typical to have a simple listener class, such as:</p>
 <pre><code>public interface OnClickListener {
-    
+
     void onClick(View v);
 }</code></pre>
 <p>A great feature of Kotlin is that it performs <a href="https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions" target="_blank">SAM (Single Abstract Method) conversions</a> for Java classes. A click listener in Java that appears like:</p>
@@ -1715,7 +1715,7 @@ onClickListener?.invoke(this)</code></pre>
 
 
       </google-codelab-step>
-    
+
       <google-codelab-step label="This is not over yet" duration="60">
         <h3>What did we learn?</h3>
 <h3>How would you use Kotlin in your daily projects.</h3>
@@ -1732,7 +1732,7 @@ onClickListener?.invoke(this)</code></pre>
 
 
       </google-codelab-step>
-    
+
   </google-codelab>
 
   <script>
